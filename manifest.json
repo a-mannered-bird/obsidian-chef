@@ -6,6 +6,5 @@
 	"description": "An obsidian plugin for cooking!",
 	"author": "Damien Bernard",
 	"authorUrl": "https://github.com/dmn-bernard",
-	// "fundingUrl": "https://obsidian.md/pricing",
 	"isDesktopOnly": false
 }

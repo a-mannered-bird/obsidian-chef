@@ -1,5 +1,7 @@
 # vscode
 .vscode 
+*.sublime-project
+*.sublime-workspace
 
 # Intellij
 *.iml

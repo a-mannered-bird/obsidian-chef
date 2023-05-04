@@ -1,37 +1,58 @@
-import { MarkdownPostProcessorContext, Plugin } from 'obsidian';
+import {Plugin} from 'obsidian'
+import { ListView, VIEW_TYPE } from './view'
 
 // Remember to rename these classes and interfaces!
 
 
 export default class MyPlugin extends Plugin {
 	async onload() {
-		console.log('loading');
-		this.registerMarkdownPostProcessor(this.processButton.bind(this));
+		console.log('loading')
+
+		this.registerView(
+			VIEW_TYPE,
+			(leaf) => new ListView(leaf)
+    )
+
+		this.addCommand({
+			id: "open-view",
+			name: "Open List View",
+			callback: () => {
+				if (this.viewExists()) {
+					this.addListView();
+				} else {
+					// TODO -> Diplay the view
+					// this.app.workspace.revealLeaf(this.view.leaf);
+				}
+			}
+		});
+
+		this.addListView()
+
 		this.registerMarkdownCodeBlockProcessor(
-      "ingredient",
+      'ingredient',
       async (source, el, ctx) => {
-				const buttonHtml = '<button class="my-button">Add to list</button>';
-        el.innerHTML = buttonHtml;
+				const buttonHtml = '<button class="my-button">Add to list</button>'
+        el.innerHTML = buttonHtml
       }
-    );
+    )
 	}
 
-	async processButton(el: HTMLElement, ctx: MarkdownPostProcessorContext) {
-		console.log('processButton', el);
-		const regex = /my-special-button`/g;
-		const buttonHtml = '<button class="my-button">Add to list</button>';
+	viewExists () {
+		return this.app.workspace.getLeavesOfType(VIEW_TYPE).length
+	}
 
-		el.querySelectorAll('*').forEach((paragraph) => {
-			const innerHtml = paragraph.innerHTML;
-			if (innerHtml.match(regex)) {
-				const newHtml = innerHtml.replace(regex, buttonHtml);
-				paragraph.innerHTML = newHtml;
-			}
+	async addListView() {
+		if (this.viewExists()) {
+			return;
+		}
+		await this.app.workspace.getRightLeaf(false).setViewState({
+			type: VIEW_TYPE
 		});
 	}
 
 	onunload() {
-		console.log('Unloading');
+		console.log('Unloading')
+		this.app.workspace.detachLeavesOfType(VIEW_TYPE)
 	}
 
 }

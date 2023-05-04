@@ -2,12 +2,12 @@ import { ItemView, WorkspaceLeaf } from 'obsidian'
 import * as React from 'react'
 import * as ReactDOM from 'react-dom'
 import { ReactView } from './ReactView'
-import { createRoot } from 'react-dom/client'
+import { createRoot, Root } from 'react-dom/client'
 
 export const VIEW_TYPE = 'OBSIDIAN_CHEF_VIEW'
 
 export class ListView extends ItemView {
-	private root: HTMLElement | null = null
+	private root: Root | null = null
 
 	constructor(leaf: WorkspaceLeaf) {
 		super(leaf)
@@ -22,10 +22,8 @@ export class ListView extends ItemView {
 	}
 
 	async onOpen() {
-		this.root = createDiv()
-    this.containerEl.appendChild(this.root)
-    const root = createRoot(this.root)
-    root.render(
+		this.root = createRoot(this.containerEl.children[1]);
+    this.root.render(
       <React.StrictMode>
         <ReactView />
       </React.StrictMode>
@@ -34,10 +32,8 @@ export class ListView extends ItemView {
 
 	async onClose() {
     if (this.root) {
-			console.log(this.root);
+			// TODO Fix issue with command below
       ReactDOM.unmountComponentAtNode(this.root);
-      this.root.remove()
-      this.root = null
     }
 	}
 }

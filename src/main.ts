@@ -1,6 +1,6 @@
-import {Plugin} from 'obsidian'
+import { Plugin } from 'obsidian'
 import { ListView, VIEW_TYPE } from './view'
-import { accessSync, writeFileSync, readdirSync} from 'fs'
+import { createDataFile } from './utils/data'
 
 // Remember to rename these classes and interfaces!
 
@@ -8,7 +8,7 @@ import { accessSync, writeFileSync, readdirSync} from 'fs'
 export default class MyPlugin extends Plugin {
 	async onload() {
 		console.log('loading')
-		await this.createDataFile()
+		await createDataFile()
 
 		this.registerView(
 			VIEW_TYPE,
@@ -58,20 +58,4 @@ export default class MyPlugin extends Plugin {
 		});
 	}
 
-	async createDataFile() {
-		// console.log(this.app.workspace.getActiveFile()?.parent?.path, this.app.vault.getRoot().vault.adapter.read
-		const basePath = `${(this.app.vault.adapter as any).getBasePath()}/.obsidian/plugins/obsidian-chef/`
-		try {
-			await accessSync(`${basePath}/data.json`);
-			console.log('File already exists!');
-		} catch (error) {
-			if (error.code === 'ENOENT') {
-				console.log('File does not exist. Creating file...');
-				await writeFileSync(`${basePath}/data.json`, '{}');
-				console.log('File created!');
-			} else {
-				throw error
-			}
-		}
-	}
 }

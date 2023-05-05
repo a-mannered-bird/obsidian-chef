@@ -1,6 +1,5 @@
 import { ItemView, WorkspaceLeaf } from 'obsidian'
 import * as React from 'react'
-import * as ReactDOM from 'react-dom'
 import { ReactView } from './ReactView'
 import { createRoot, Root } from 'react-dom/client'
 
@@ -32,8 +31,7 @@ export class ListView extends ItemView {
 
 	async onClose() {
     if (this.root) {
-			// TODO Fix issue with command below
-      ReactDOM.unmountComponentAtNode(this.root);
+      this.root.unmount()
     }
 	}
 }

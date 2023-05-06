@@ -13,12 +13,37 @@ If your plugin does not need CSS, delete this file.
 	margin-bottom: 5px;
 }
 
-.oc-list-item-quantity {
-	margin-right: 5px;
-}
-
 .oc-list-item-ticked {
 	text-decoration: line-through;
 	color: #999;
 }
+
+	.oc-list-item-quantity {
+		margin-left: 5px;
+		margin-right: 10px;
+	}
+
+		.oc-list-item-decrement, .oc-list-item-increment {
+			padding: 8px;
+		}
+
+		.oc-list-item-decrement:disabled, .oc-list-item-increment:disabled {
+			opacity: 0.5;
+		}
+
+
+		.oc-list-item-decrement {
+			border-top-right-radius: 0;
+			border-bottom-right-radius: 0;
+		}
+
+		.oc-list-item-quantity .oc-list-item-quantity-input {
+			width: 50px;
+			border-radius: 0;
+		}
+
+		.oc-list-item-increment {
+			border-top-left-radius: 0;
+			border-bottom-left-radius: 0;
+		}
 

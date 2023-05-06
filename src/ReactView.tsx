@@ -12,10 +12,8 @@ export const ReactView = () => {
 		})
 	}, [])
 
-	const onChangeItem = (value: boolean, item: Item) => {
-		if (!data) return;
-		const newItem = {...item}
-		newItem.ticked = value
+	const onChangeItem = (newItem: Item) => {
+		if (!data) return
 		setItem({...data}, newItem).then((newData) => {
 			setData(newData)
 		})

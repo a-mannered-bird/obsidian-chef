@@ -1,5 +1,6 @@
-import { accessSync, writeFileSync} from 'fs'
+import { accessSync, writeFileSync, readFileSync } from 'fs'
 import defaultData from './default-db'
+import {PluginData} from '../types'
 
 export async function getRoot() {
 	return `${(this.app.vault.adapter as any).getBasePath()}/.obsidian/plugins/obsidian-chef/`
@@ -10,7 +11,6 @@ export async function createDataFile() {
 	const root = await getRoot()
 	try {
 		accessSync(`${root}/data.json`)
-		console.log('File already exists!')
 	} catch (error) {
 		if (error.code === 'ENOENT') {
 			console.log('File does not exist. Creating file...')
@@ -20,4 +20,10 @@ export async function createDataFile() {
 			throw error
 		}
 	}
+}
+
+export async function getData(): Promise<PluginData> {
+	const root = await getRoot()
+	const data = readFileSync(`${root}/data.json`, 'utf8')
+	return JSON.parse(data)
 }

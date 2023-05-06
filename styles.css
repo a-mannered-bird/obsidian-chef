@@ -6,3 +6,12 @@ available in the app when your plugin is enabled.
 If your plugin does not need CSS, delete this file.
 
 */
+
+.oc-list-item {
+	display: flex;
+	align-items: center;
+}
+
+.oc-list-item-quantity {
+	margin-right: 5px;
+}

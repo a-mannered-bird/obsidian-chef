@@ -1,5 +1,5 @@
 
-export type ListItem = {
+export type Item = {
 	id: number
 	name: string
 	category: number
@@ -17,6 +17,6 @@ export type PluginData = {
 		categoriesCount: number
 		categories: Category[]
 		itemsCount: number
-		items: ListItem[]
+		items: Item[]
 	}
 }

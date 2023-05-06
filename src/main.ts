@@ -42,7 +42,7 @@ export default class MyPlugin extends Plugin {
 
 	onunload() {
 		console.log('Unloading')
-		this.app.workspace.detachLeavesOfType(VIEW_TYPE)
+		// this.app.workspace.detachLeavesOfType(VIEW_TYPE)
 	}
 
 	viewExists () {

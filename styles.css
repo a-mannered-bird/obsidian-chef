@@ -10,8 +10,15 @@ If your plugin does not need CSS, delete this file.
 .oc-list-item {
 	display: flex;
 	align-items: center;
+	margin-bottom: 5px;
 }
 
 .oc-list-item-quantity {
 	margin-right: 5px;
 }
+
+.oc-list-item-ticked {
+	text-decoration: line-through;
+	color: #999;
+}
+

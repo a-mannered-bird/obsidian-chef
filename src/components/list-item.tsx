@@ -1,5 +1,6 @@
 import * as React from "react"
 import {Item} from '../types'
+import {css} from '../utils/utils'
 
 type ListItemProps = {
 	item: Item
@@ -10,7 +11,13 @@ export const ListItem: React.FC<ListItemProps> = ({
 	item,
 	onChange,
 }) => {
-	return <div className="oc-list-item">
+
+	const itemCss = css({
+		ocListItem: true,
+		ocListItemTicked: item.ticked,
+	})
+
+	return <div className={itemCss}>
 		<input
 			className="oc-list-item-checkbox"
 			type="checkbox"

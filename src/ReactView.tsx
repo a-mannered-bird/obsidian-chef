@@ -3,12 +3,16 @@ import {ListItem} from './components/list-item'
 import {getData} from './utils/data'
 import {PluginData, Item} from './types'
 
+const onChangeItem = (value: boolean, item: Item) => {
+	console.log(value, item)
+}
+
 const displayItems = (items: Item[]) => {
 	return items.map((item) => {
 		return <ListItem
 			key={`item-${item.id}`}
 			item={item}
-			onChange={(value, item) => {console.log(value, item)}}
+			onChange={onChangeItem}
 		/>
 	})
 }

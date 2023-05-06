@@ -1,21 +1,7 @@
 import * as React from "react";
 import {ListItem} from './components/list-item'
-import {getData} from './utils/data'
+import {getData, setItem} from './utils/data'
 import {PluginData, Item} from './types'
-
-const onChangeItem = (value: boolean, item: Item) => {
-	console.log(value, item)
-}
-
-const displayItems = (items: Item[]) => {
-	return items.map((item) => {
-		return <ListItem
-			key={`item-${item.id}`}
-			item={item}
-			onChange={onChangeItem}
-		/>
-	})
-}
 
 export const ReactView = () => {
 	const [data, setData] = React.useState<PluginData|null>(null);
@@ -25,6 +11,25 @@ export const ReactView = () => {
 			setData(value)
 		})
 	}, [])
+
+	const onChangeItem = (value: boolean, item: Item) => {
+		if (!data) return;
+		const newItem = {...item}
+		newItem.ticked = value
+		setItem({...data}, newItem).then((newData) => {
+			setData(newData)
+		})
+	}
+
+	const displayItems = (items: Item[]) => {
+		return items.map((item) => {
+			return <ListItem
+				key={`item-${item.id}`}
+				item={item}
+				onChange={onChangeItem}
+			/>
+		})
+	}
 
 	const items = displayItems(data?.list?.items || [])
 

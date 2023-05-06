@@ -1,6 +1,6 @@
 import { Plugin } from 'obsidian'
 import { ListView, VIEW_TYPE } from './view'
-import { createDataFile } from './utils/data'
+import { writeData } from './utils/data'
 
 // Remember to rename these classes and interfaces!
 
@@ -8,7 +8,7 @@ import { createDataFile } from './utils/data'
 export default class MyPlugin extends Plugin {
 	async onload() {
 		console.log('loading')
-		await createDataFile()
+		await writeData()
 
 		this.registerView(
 			VIEW_TYPE,

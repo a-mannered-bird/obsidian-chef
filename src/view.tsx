@@ -1,6 +1,6 @@
 import { ItemView, WorkspaceLeaf } from 'obsidian'
 import * as React from 'react'
-import { ReactView } from './ReactView'
+import { ListApp } from './ListApp'
 import { createRoot, Root } from 'react-dom/client'
 
 export const VIEW_TYPE = 'OBSIDIAN_CHEF_VIEW'
@@ -24,7 +24,7 @@ export class ListView extends ItemView {
 		this.root = createRoot(this.containerEl.children[1]);
     this.root.render(
       <React.StrictMode>
-        <ReactView />
+        <ListApp />
       </React.StrictMode>
     )
 	}

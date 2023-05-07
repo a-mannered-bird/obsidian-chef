@@ -3,8 +3,8 @@ import {ListItem} from './components/list-item'
 import {getData, setItem} from './utils/data'
 import {PluginData, Item} from './types'
 
-export const ReactView = () => {
-	const [data, setData] = React.useState<PluginData|null>(null);
+export const ListApp = () => {
+	const [data, setData] = React.useState<PluginData|null>(null)
 
 	React.useEffect(() => {
 		getData().then((value) => {

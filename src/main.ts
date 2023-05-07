@@ -20,7 +20,7 @@ export default class MyPlugin extends Plugin {
 			name: "Open List View",
 			callback: () => {
 				if (this.viewExists()) {
-					this.addListView();
+					this.addListView()
 				} else {
 					// TODO -> Diplay the view
 					// this.app.workspace.revealLeaf(this.view.leaf);

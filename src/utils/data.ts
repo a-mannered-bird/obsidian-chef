@@ -1,6 +1,6 @@
 import { accessSync, writeFileSync, readFileSync } from 'fs'
 import defaultData from './default-db'
-import {PluginData, Item} from '../types'
+import {PluginData, Item, Settings} from '../types'
 
 export async function getRoot() {
 	return `${(this.app.vault.adapter as any).getBasePath()}/.obsidian/plugins/obsidian-chef/`
@@ -39,6 +39,12 @@ export const setItem = async (data: PluginData, item: Item) => {
 	} else {
 		data.list.items[index] = item
 	}
+	await writeData(data)
+	return data
+}
+
+export const setSettings = async (data: PluginData, settings: Settings) => {
+	data.settings = settings
 	await writeData(data)
 	return data
 }

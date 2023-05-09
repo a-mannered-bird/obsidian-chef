@@ -7,7 +7,7 @@ If your plugin does not need CSS, delete this file.
 
 */
 
-.oc-list-item {
+.oc-list-item, .checkbox-filter {
 	display: flex;
 	align-items: center;
 	margin-bottom: 5px;

@@ -2,7 +2,7 @@
 export type Item = {
 	id: number
 	name: string
-	category: number
+	categoryId: number
 	quantity: number
 	ticked: boolean
 }
@@ -12,6 +12,12 @@ export type Category = {
 	name: string
 }
 
+export type Settings = {
+	showCategories: boolean
+	showTicked: boolean
+	showUnticked: boolean
+}
+
 export type PluginData = {
 	list: {
 		categoriesCount: number
@@ -19,4 +25,5 @@ export type PluginData = {
 		itemsCount: number
 		items: Item[]
 	}
+	settings: Settings
 }

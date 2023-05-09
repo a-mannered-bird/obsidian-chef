@@ -100,7 +100,7 @@ export const ListApp = () => {
 
 		{showCategories && displayCategories()}
 		{!showCategories && <>
-			<h5>Uncategorised</h5>
+			<h5 className="oc-list-category-name">Uncategorised</h5>
 			{displayItems()}
 		</>}
 	</>)

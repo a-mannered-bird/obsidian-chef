@@ -2,7 +2,7 @@ import {PluginData} from '../types'
 
 export default JSON.stringify({
 	"list": {
-		"categoriesCount": 2,
+		"categoriesCount": 3,
 		"categories": [
 			{
 				"id": 1,
@@ -11,6 +11,10 @@ export default JSON.stringify({
 			{
 				"id": 2,
 				"name": "fruit",
+			},
+			{
+				"id": 3,
+				"name": "tools",
 			},
 		],
 		"itemsCount": 6,

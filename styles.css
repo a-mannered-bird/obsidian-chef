@@ -7,7 +7,15 @@ If your plugin does not need CSS, delete this file.
 
 */
 
-.oc-list-item, .checkbox-filter {
+.oc-list-search {
+	width: 100%;
+}
+
+.oc-list-category-name {
+	margin-bottom: 10px;
+}
+
+.oc-list-item, .oc-checkbox {
 	display: flex;
 	align-items: center;
 	margin-bottom: 5px;
@@ -47,3 +55,12 @@ If your plugin does not need CSS, delete this file.
 			border-bottom-left-radius: 0;
 		}
 
+
+/* UTILITY CLASSES */
+.oc-mg-top-5 {
+	margin-top: 5px;
+}
+
+.oc-mg-top-10 {
+	margin-top: 10px;
+}

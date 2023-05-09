@@ -33,12 +33,18 @@ export const ListApp = () => {
 			.sort((a: Category, b: Category) => a.name.localeCompare(b.name))
 		categories = [{id: -1, name: 'Uncategorised'}].concat(categories)
 
+
 		return categories.map((category) => {
+			const items = displayItems(category.id)
+
+			// Hide uncategorised category if it is empty
+			if (Array.isArray(items) && !items.length && category.id === -1) return null
+
 			return <ListCategory
 				key={`category-${category.id}`}
 				category={category}
 			>
-				{displayItems(category.id)}
+				{items}
 			</ListCategory>
 		})
 	}
@@ -56,6 +62,10 @@ export const ListApp = () => {
 				if (!a.ticked && b.ticked) return -1
 				return a.name.localeCompare(b.name)
 			})
+
+		if (!items.length) return <p>
+			No items found {categoryId ? 'in this category' : ''}
+		</p>
 
 		return items.map((item) => {
 			return <ListItem

@@ -11,8 +11,8 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 	category,
 	children,
 }) => {
-	return <div>
-		<h5>{capitalise(category.name)}</h5>
+	return <>
+		<h5 className="oc-list-category-name">{capitalise(category.name)}</h5>
 		{children}
-	</div>
+	</>
 }

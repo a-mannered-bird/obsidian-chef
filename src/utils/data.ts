@@ -1,6 +1,6 @@
 import { accessSync, writeFileSync, readFileSync } from 'fs'
 import defaultData from './default-db'
-import {PluginData, Item, Settings} from '../types'
+import {PluginData, Category, Settings, Item} from '../types'
 
 export async function getRoot() {
 	return `${(this.app.vault.adapter as any).getBasePath()}/.obsidian/plugins/obsidian-chef/`
@@ -30,23 +30,23 @@ export async function getData(): Promise<PluginData> {
 	return JSON.parse(data)
 }
 
-export const setItem = async (data: PluginData, item: Item) => {
-	const index = data.list.items.findIndex(i => i.id === item.id)
+export const setItem = async (data: PluginData, item: Item | Category, type: 'items' | 'categories') => {
+	const index = data.list[type].findIndex(i => i.id === item.id)
 	if (index === -1) {
-		data.list.itemsCount++
-		item.id = data.list.itemsCount
-		data.list.items.push(item)
+		data.list[`${type}Count`]++
+		item.id = data.list[`${type}Count`]
+		data.list[type].push(item as any)
 	} else {
-		data.list.items[index] = item
+		data.list[type][index] = item
 	}
 	await writeData(data)
 	return data
 }
 
-export const deleteItem = async (data: PluginData, itemId: number) => {
-	const index = data.list.items.findIndex(i => i.id === itemId)
+export const deleteItem = async (data: PluginData, itemId: number, type: 'items' | 'categories') => {
+	const index = data.list[type].findIndex(i => i.id === itemId)
 	if (index !== -1) {
-		data.list.items.splice(index, 1)
+		data.list[type].splice(index, 1)
 	}
 	await writeData(data)
 	return data

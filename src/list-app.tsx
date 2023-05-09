@@ -1,7 +1,7 @@
 import * as React from "react";
 import {ListItem, ListCategory, ListFilters} from './components'
 import {getData, setItem, deleteItem, setSettings} from './utils'
-import {PluginData, Item, Settings} from './types'
+import {PluginData, Item, Settings, Category} from './types'
 
 export const ListApp = () => {
 	const [data, setData] = React.useState<PluginData|null>(null)
@@ -17,14 +17,14 @@ export const ListApp = () => {
 
 	const {showCategories, showTicked, showUnticked} = data.settings
 
-	const onChangeItem = (newItem: Item) => {
-		setItem({...data}, newItem).then((newData) => {
+	const onChangeItem = (newItem: Item | Category, type: 'items' | 'categories') => {
+		setItem({...data}, newItem, type).then((newData) => {
 			setData(newData)
 		})
 	}
 
-	const onDeleteItem = (itemId: number) => {
-		deleteItem({...data}, itemId).then((newData) => {
+	const onDeleteItem = (itemId: number, type: 'items' | 'categories') => {
+		deleteItem({...data}, itemId, type).then((newData) => {
 			setData(newData)
 		})
 	}
@@ -53,6 +53,8 @@ export const ListApp = () => {
 			return <ListCategory
 				key={`category-${category.id}`}
 				category={category}
+				onChange={(category) => onChangeItem(category, 'categories')}
+				onDelete={() => onDeleteItem(category.id, 'categories')}
 			>
 				{items}
 			</ListCategory>
@@ -85,8 +87,8 @@ export const ListApp = () => {
 			return <ListItem
 				key={`item-${item.id}`}
 				item={item}
-				onChange={onChangeItem}
-				onDelete={() => onDeleteItem(item.id)}
+				onChange={(item) => onChangeItem(item, 'items')}
+				onDelete={() => onDeleteItem(item.id, 'items')}
 			/>
 		})
 	}
@@ -97,8 +99,8 @@ export const ListApp = () => {
 		<ListFilters
 			query={query}
 			settings={data.settings}
-			onAddItem={(item) => {
-				onChangeItem(item)
+			onAddItem={(item, type) => {
+				onChangeItem(item, type)
 				setQuery('')
 			}}
 			onChangeQuery={setQuery}

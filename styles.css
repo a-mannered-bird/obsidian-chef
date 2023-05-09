@@ -18,9 +18,13 @@ If your plugin does not need CSS, delete this file.
 	cursor: pointer;
 }
 
-.oc-list-search {}
+.oc-list-search {
+	display: flex;
+	align-items: center;
+}
 
 	.oc-list-search-label {
+		display: block;
 		margin-right: 10px;
 	}
 
@@ -38,10 +42,15 @@ If your plugin does not need CSS, delete this file.
 	}
 
 
-
-.oc-list-category-name {
-	margin-bottom: 10px;
+.oc-category {
+	display: flex;
+	align-items: center;
+	margin: 20px 0 10px;
 }
+
+	.oc-list-category-name {
+		margin: 0;
+	}
 
 .oc-list-item, .oc-checkbox {
 	display: flex;

@@ -43,6 +43,15 @@ export const setItem = async (data: PluginData, item: Item) => {
 	return data
 }
 
+export const deleteItem = async (data: PluginData, itemId: number) => {
+	const index = data.list.items.findIndex(i => i.id === itemId)
+	if (index !== -1) {
+		data.list.items.splice(index, 1)
+	}
+	await writeData(data)
+	return data
+}
+
 export const setSettings = async (data: PluginData, settings: Settings) => {
 	data.settings = settings
 	await writeData(data)

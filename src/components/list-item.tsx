@@ -1,16 +1,18 @@
 import * as React from "react"
-import {Icon} from '.'
+import {Icon, IconButton} from '.'
 import {Item} from '../types'
 import {css} from '../utils/utils'
 
 type ListItemProps = {
 	item: Item
 	onChange: (newItem: Item) => void
+	onDelete: () => void
 }
 
 export const ListItem: React.FC<ListItemProps> = ({
 	item,
 	onChange,
+	onDelete,
 }) => {
 
 	const [isEditing, setIsEditing] = React.useState(false)
@@ -78,6 +80,12 @@ export const ListItem: React.FC<ListItemProps> = ({
 			size="18px"
 			onClick={() => setIsEditing(!isEditing)}
 		/>
+
+		{isEditing && <IconButton
+			className="oc-list-item-delete"
+			name="delete"
+			onClick={onDelete}
+		/>}
 
 	</div>
 }

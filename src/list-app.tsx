@@ -1,6 +1,6 @@
 import * as React from "react";
 import {ListItem, ListCategory, ListFilters} from './components'
-import {getData, setItem, setSettings} from './utils'
+import {getData, setItem, deleteItem, setSettings} from './utils'
 import {PluginData, Item, Settings} from './types'
 
 export const ListApp = () => {
@@ -19,6 +19,12 @@ export const ListApp = () => {
 
 	const onChangeItem = (newItem: Item) => {
 		setItem({...data}, newItem).then((newData) => {
+			setData(newData)
+		})
+	}
+
+	const onDeleteItem = (itemId: number) => {
+		deleteItem({...data}, itemId).then((newData) => {
 			setData(newData)
 		})
 	}
@@ -80,6 +86,7 @@ export const ListApp = () => {
 				key={`item-${item.id}`}
 				item={item}
 				onChange={onChangeItem}
+				onDelete={() => onDeleteItem(item.id)}
 			/>
 		})
 	}

@@ -1,6 +1,6 @@
 import * as React from "react";
 import {ListItem} from './components/list-item'
-import {getData, setItem} from './utils/data'
+import {getData, setItem} from './utils'
 import {PluginData, Item} from './types'
 
 export const ListApp = () => {

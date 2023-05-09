@@ -1,6 +1,6 @@
 import { ItemView, WorkspaceLeaf } from 'obsidian'
 import * as React from 'react'
-import { ListApp } from './ListApp'
+import { ListApp } from './list-app'
 import { createRoot, Root } from 'react-dom/client'
 
 export const VIEW_TYPE = 'OBSIDIAN_CHEF_VIEW'

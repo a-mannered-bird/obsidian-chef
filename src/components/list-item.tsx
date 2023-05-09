@@ -27,7 +27,6 @@ export const ListItem: React.FC<ListItemProps> = ({
 	}
 
 	const onQuantityIncrement = (isPositive: boolean) => {
-		event.preventDefault()
 		onChange({...item, quantity: item.quantity + (isPositive ? 1 : -1)})
 	}
 

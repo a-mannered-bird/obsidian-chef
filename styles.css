@@ -7,11 +7,10 @@ If your plugin does not need CSS, delete this file.
 
 */
 
-.oc-list-search {
-
-}
+.oc-list-search {}
 
 	.oc-list-search-label {
+		margin-right: 10px;
 	}
 
 	.oc-list-search-input {

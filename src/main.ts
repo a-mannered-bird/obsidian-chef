@@ -27,8 +27,6 @@ export default class MyPlugin extends Plugin {
 			}
 		});
 
-		this.addListView()
-
 		this.registerMarkdownCodeBlockProcessor(
 			'ingredient',
 			async (source, el, ctx) => {
@@ -53,9 +51,10 @@ export default class MyPlugin extends Plugin {
 			this.app.workspace.revealLeaf(this.app.workspace.getLeavesOfType(VIEW_TYPE)[0])
 			return;
 		}
-		await this.app.workspace.getLeaf().setViewState({ 
+		await this.app.workspace.getLeaf(true).setViewState({ 
 			type: VIEW_TYPE
 		});
+		this.app.workspace.revealLeaf(this.app.workspace.getLeavesOfType(VIEW_TYPE)[0])
 	}
 
 }

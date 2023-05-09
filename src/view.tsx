@@ -17,10 +17,11 @@ export class ListView extends ItemView {
 	}
 
 	getDisplayText() {
-		return 'Example view'
+		return 'Obsidian Chef List'
 	}
 
 	async onOpen() {
+		this.icon = 'checkbox-glyph'
 		this.root = createRoot(this.containerEl.children[1]);
     this.root.render(
       <React.StrictMode>

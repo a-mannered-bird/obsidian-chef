@@ -1,20 +1,25 @@
 import * as React from 'react'
-import {Settings} from '../types'
+import {Settings, Item} from '../types'
 import {Checkbox} from '../components'
 
 type ListFilters = {
+	query: string
 	settings: Settings
-	onChange: (newSettings: Settings) => void
+	onAddItem: (item: Item) => void
+	onChangeSettings: (newSettings: Settings) => void
+	onChangeQuery: (query: string) => void
 }
 
 export const ListFilters: React.FC<ListFilters> = ({
+	query,
 	settings,
-	onChange,
+	onAddItem,
+	onChangeSettings,
+	onChangeQuery,
 }) => {
-	const [query, setQuery] = React.useState('')
 
 	const onChangeFilter = (key: keyof Settings, value: boolean) => {
-		onChange({...settings, [key]: value})
+		onChangeSettings({...settings, [key]: value})
 	}
 
 	return <>
@@ -37,18 +42,27 @@ export const ListFilters: React.FC<ListFilters> = ({
 				/>
 			</div>
 
-			<div className="oc-mg-top-10" >
-				<label htmlFor="search">
+			<div className="oc-mg-top-10 oc-list-search" >
+				<label className="oc-list-search-label" htmlFor="search">
 					<strong>Search or add an item</strong>
 				</label>
 
 				<input
-					className="oc-list-search oc-mg-top-5"
+					className="oc-list-search-input"
 					name="search"
 					type="text"
 					value={query}
-					onChange={(event) => setQuery(event.target.value)}
+					onChange={(event) => onChangeQuery(event.target.value)}
 				/>
+
+				<button
+					className="oc-list-search-add"
+					disabled={!query}
+					title="Add this item to your list"
+					onClick={() => onAddItem({name: query, ticked: false, quantity: 1, categoryId: -1, id: -1})}
+				>
+					+
+				</button>
 			</div>
 		</div>
 	</>

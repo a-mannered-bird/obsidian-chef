@@ -1,10 +1,11 @@
 import * as React from "react";
 import {ListItem, ListCategory, ListFilters} from './components'
 import {getData, setItem, setSettings} from './utils'
-import {PluginData, Item, Category, Settings} from './types'
+import {PluginData, Item, Settings} from './types'
 
 export const ListApp = () => {
 	const [data, setData] = React.useState<PluginData|null>(null)
+	const [query, setQuery] = React.useState('')
 
 	React.useEffect(() => {
 		getData().then((value) => {
@@ -29,16 +30,19 @@ export const ListApp = () => {
 	}
 
 	const displayCategories = () => {
-		let categories = (data?.list.categories || [])
-			.sort((a: Category, b: Category) => a.name.localeCompare(b.name))
-		categories = [{id: -1, name: 'Uncategorised'}].concat(categories)
-
+		const categories = [{id: -1, name: 'Uncategorised'}]
+			.concat(data?.list.categories || [])
 
 		return categories.map((category) => {
-			const items = displayItems(category.id)
+			const matchQuery = category.name.toLowerCase().includes(query.toLowerCase())
+			const items = displayItems(category.id, matchQuery)
 
+			const hasResults = Array.isArray(items)
+
+			// Hide empty categories when a search is on
+			if (query && !matchQuery && !hasResults) return null
 			// Hide uncategorised category if it is empty
-			if (Array.isArray(items) && !items.length && category.id === -1) return null
+			if (!hasResults && category.id === -1) return null
 
 			return <ListCategory
 				key={`category-${category.id}`}
@@ -49,13 +53,17 @@ export const ListApp = () => {
 		})
 	}
 
-	const displayItems = (categoryId?: number) => {
+	const displayItems = (categoryId?: number, bypassQuery?: boolean) => {
 		const items = (data?.list.items || [])
 			.filter((item: Item) => {
 				const isTickedAllowed = item.ticked && showTicked
 				const isUntickedAllowed = !item.ticked && showUnticked
 				const isFromCategory = !showCategories || item.categoryId === categoryId
 				return isFromCategory && (isTickedAllowed || isUntickedAllowed)
+			})
+			.filter((item: Item) => {
+				if (!query || bypassQuery) return true
+				return item.name.toLowerCase().includes(query.toLowerCase())
 			})
 			.sort((a: Item, b: Item) => {
 				if (a.ticked && !b.ticked) return 1
@@ -80,8 +88,14 @@ export const ListApp = () => {
 		<h4>Obsidian Chef List</h4>
 
 		<ListFilters
+			query={query}
 			settings={data.settings}
-			onChange={onChangeSettings}
+			onAddItem={(item) => {
+				onChangeItem(item)
+				setQuery('')
+			}}
+			onChangeQuery={setQuery}
+			onChangeSettings={onChangeSettings}
 		/>
 
 		{showCategories && displayCategories()}

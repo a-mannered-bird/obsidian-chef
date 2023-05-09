@@ -8,8 +8,26 @@ If your plugin does not need CSS, delete this file.
 */
 
 .oc-list-search {
-	width: 100%;
+
 }
+
+	.oc-list-search-label {
+	}
+
+	.oc-list-search-input {
+		margin-top: 5px;
+	}
+
+	.oc-list-search-add {
+		margin-left: 5px;
+		cursor: pointer;
+	}
+	.oc-list-search-add:disabled {
+		opacity: 0.5;
+		cursor: default;	
+	}
+
+
 
 .oc-list-category-name {
 	margin-bottom: 10px;
@@ -33,10 +51,12 @@ If your plugin does not need CSS, delete this file.
 
 		.oc-list-item-decrement, .oc-list-item-increment {
 			padding: 8px;
+			cursor: pointer;
 		}
 
 		.oc-list-item-decrement:disabled, .oc-list-item-increment:disabled {
 			opacity: 0.5;
+			cursor: default;
 		}
 
 

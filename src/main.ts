@@ -15,16 +15,15 @@ export default class MyPlugin extends Plugin {
 			(leaf) => new ListView(leaf)
 		)
 
+		this.addRibbonIcon('checkbox-glyph', 'Open Obsidian Chef list', () => {
+			this.addListView()
+		})
+
 		this.addCommand({
 			id: "open-view",
 			name: "Open List View",
 			callback: () => {
-				if (this.viewExists()) {
-					this.addListView()
-				} else {
-					// TODO -> Diplay the view
-					// this.app.workspace.revealLeaf(this.view.leaf);
-				}
+				this.addListView()
 			}
 		});
 
@@ -51,9 +50,10 @@ export default class MyPlugin extends Plugin {
 
 	async addListView() {
 		if (this.viewExists()) {
+			this.app.workspace.revealLeaf(this.app.workspace.getLeavesOfType(VIEW_TYPE)[0])
 			return;
 		}
-		await this.app.workspace.getRightLeaf(false).setViewState({
+		await this.app.workspace.getLeaf().setViewState({ 
 			type: VIEW_TYPE
 		});
 	}

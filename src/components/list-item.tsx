@@ -1,4 +1,5 @@
 import * as React from "react"
+import {Icon} from '.'
 import {Item} from '../types'
 import {css} from '../utils/utils'
 
@@ -11,6 +12,8 @@ export const ListItem: React.FC<ListItemProps> = ({
 	item,
 	onChange,
 }) => {
+
+	const [isEditing, setIsEditing] = React.useState(false)
 
 	const itemCss = css({
 		ocListItem: true,
@@ -60,6 +63,21 @@ export const ListItem: React.FC<ListItemProps> = ({
 				+
 			</button>
 		</span>
-		<span className="oc-list-item-name">{item.name}</span>
+
+		{isEditing ? 
+			<input
+				type="text"
+				value={item.name}
+				onChange={(event) => onChange({...item, name: event.target.value})}
+			/> : <span className="oc-list-item-name">{item.name}</span>
+		}
+
+		<Icon 
+			className="oc-list-item-edit"
+			name="edit"
+			size="18px"
+			onClick={() => setIsEditing(!isEditing)}
+		/>
+
 	</div>
 }

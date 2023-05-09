@@ -7,6 +7,16 @@ If your plugin does not need CSS, delete this file.
 
 */
 
+.oc-icon path {
+	stroke: white;
+}
+
+.oc-icon-button {
+	padding: 7px;
+	display: inline-flex;
+	margin: 0 5px;
+}
+
 .oc-list-search {}
 
 	.oc-list-search-label {
@@ -36,6 +46,10 @@ If your plugin does not need CSS, delete this file.
 	display: flex;
 	align-items: center;
 	margin-bottom: 5px;
+}
+
+.oc-list-item {
+/*	justify-content: space-between;*/
 }
 
 .oc-list-item-ticked {
@@ -72,6 +86,11 @@ If your plugin does not need CSS, delete this file.
 		.oc-list-item-increment {
 			border-top-left-radius: 0;
 			border-bottom-left-radius: 0;
+		}
+
+		.oc-list-item-edit {
+			margin-left: 10px;
+			cursor: pointer;
 		}
 
 

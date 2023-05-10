@@ -42,9 +42,6 @@ export const ListFilters: React.FC<ListFilters> = ({
 				/>
 			</div>
 
-			<label className="oc-list-search-label" htmlFor="search">
-				<strong></strong>
-			</label>
 			<div className="oc-list-search">
 				<input
 					className="oc-list-search-input"

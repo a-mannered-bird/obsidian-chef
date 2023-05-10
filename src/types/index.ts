@@ -9,6 +9,7 @@ export type Item = {
 
 export type Category = {
 	id: number
+	isFolded?: boolean
 	name: string
 }
 

@@ -47,6 +47,16 @@ If your plugin does not need CSS, delete this file.
 	align-items: center;
 	margin: 20px 0 10px;
 }
+	.oc-list-category-fold-icon {
+		margin-right: 10px;
+		cursor: pointer;
+		transition: transform 0.2s;
+		font-weight: bold;
+	}
+
+	.oc-list-category-fold-icon-folded {
+		transform: rotate(90deg);
+	}
 
 	.oc-list-category-name {
 		margin: 0;

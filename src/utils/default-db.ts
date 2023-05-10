@@ -7,14 +7,17 @@ export default JSON.stringify({
 			{
 				"id": 1,
 				"name": "vegetable",
+				"isFolded": false,
 			},
 			{
 				"id": 2,
 				"name": "fruit",
+				"isFolded": false,
 			},
 			{
 				"id": 3,
 				"name": "tools",
+				"isFolded": false,
 			},
 		],
 		"itemsCount": 6,

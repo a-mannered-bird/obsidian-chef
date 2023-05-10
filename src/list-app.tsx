@@ -36,7 +36,7 @@ export const ListApp = () => {
 	}
 
 	const displayCategories = () => {
-		const categories = [{id: -1, name: 'Uncategorised'}]
+		const categories: Category[] = [{id: -1, name: 'Uncategorised'}]
 			.concat(data?.list.categories || [])
 
 		return categories.map((category) => {
@@ -56,7 +56,7 @@ export const ListApp = () => {
 				onChange={(category) => onChangeItem(category, 'categories')}
 				onDelete={() => onDeleteItem(category.id, 'categories')}
 			>
-				{items}
+				{!category.isFolded && items}
 			</ListCategory>
 		})
 	}

@@ -1,7 +1,7 @@
 import * as React from 'react'
 import {Icon, IconButton} from '.'
 import {Category} from '../types'
-import {capitalise} from '../utils'
+import {capitalise, css} from '../utils'
 
 type ListCategoryProps = {
 	category: Category
@@ -17,9 +17,21 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 	onDelete,
 }) => {
 	const [isEditing, setIsEditing] = React.useState(false)
+	const isCategorised = category.id !== -1
+	const foldIconClasses = css({
+		ocListCategoryFoldIcon: true,
+		ocListCategoryFoldIconFolded: !category.isFolded,
+	})
 
 	return <>
 		<div className="oc-category">
+			{isCategorised && <span
+				className={foldIconClasses}
+				onClick={() => onChange({...category, isFolded: !category.isFolded})}
+			>
+				{'>'}
+			</span>}
+
 			{isEditing ? 
 				<input
 					type="text"
@@ -28,11 +40,17 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 				/> : <h5 className="oc-list-category-name">{capitalise(category.name)}</h5>
 			}
 
-			{category.id !== -1 && <Icon
+			{isCategorised && !isEditing && <Icon
 				className="oc-list-item-edit"
 				name="edit"
 				size="18px"
 				onClick={() => setIsEditing(!isEditing)}
+			/>}
+
+			{isEditing && <IconButton 
+				className="oc-list-item-edit"
+				name="tick"
+				onClick={() => setIsEditing(false)}
 			/>}
 
 			{isEditing && <IconButton

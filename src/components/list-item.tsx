@@ -74,15 +74,20 @@ export const ListItem: React.FC<ListItemProps> = ({
 			/> : <span className="oc-list-item-name">{item.name}</span>
 		}
 
-		<Icon 
+		{!isEditing && <Icon 
 			className="oc-list-item-edit"
 			name="edit"
 			size="18px"
-			onClick={() => setIsEditing(!isEditing)}
-		/>
+			onClick={() => setIsEditing(true)}
+		/>}
+
+		{isEditing && <IconButton 
+			className="oc-list-item-edit"
+			name="tick"
+			onClick={() => setIsEditing(false)}
+		/>}
 
 		{isEditing && <IconButton
-			className="oc-list-item-delete"
 			name="delete"
 			onClick={onDelete}
 		/>}

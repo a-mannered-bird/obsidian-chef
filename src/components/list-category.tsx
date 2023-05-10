@@ -7,6 +7,7 @@ import { useDrop } from 'react-dnd'
 type ListCategoryProps = {
 	category: Category
 	children: React.ReactNode,
+	itemLength: number
 	onChange: (newCategory: Category) => void
 	onDropItem: (item: Item) => void
 	onDelete: () => void
@@ -15,6 +16,7 @@ type ListCategoryProps = {
 export const ListCategory: React.FC<ListCategoryProps> = ({
 	category,
 	children,
+	itemLength,
 	onChange,
 	onDropItem,
 	onDelete,
@@ -31,10 +33,15 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 		},
 		collect: (monitor) => ({
       isOver: !!monitor.isOver(),
+
     }),
 	}), [])
 
+	// Hide uncategorised category if it is empty
+
 	const isCategorised = category.id !== -1
+	if (!itemLength && !isCategorised) return null
+
 	const foldIconClasses = css({
 		ocListCategoryFoldIcon: true,
 		ocListCategoryFoldIconFolded: !category.isFolded,
@@ -83,6 +90,11 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 				onClick={onDelete}
 			/>}
 		</div>
+
+		{!itemLength && <p>
+			No items found in this category
+		</p>}
+
 		{children}
 	</div>
 }

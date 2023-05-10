@@ -1,8 +1,7 @@
 import * as React from "react";
 import {ListItem, ListCategory, ListFilters} from './components'
 import {getData, setItem, deleteItem, setSettings} from './utils'
-import {PluginData, Item, Settings, Category, DnDTypes} from './types'
-import { useDrop } from 'react-dnd'
+import {PluginData, Item, Settings, Category} from './types'
 
 export const ListApp = () => {
 	const [data, setData] = React.useState<PluginData|null>(null)
@@ -13,7 +12,6 @@ export const ListApp = () => {
 			setData(value)
 		})
 	}, [])
-	const [, drop] = useDrop(() => ({ accept: DnDTypes.ITEM }))
 
 	if (!data) return null
 
@@ -45,16 +43,13 @@ export const ListApp = () => {
 			const matchQuery = category.name.toLowerCase().includes(query.toLowerCase())
 			const items = displayItems(category.id, matchQuery)
 
-			const hasResults = Array.isArray(items)
-
 			// Hide empty categories when a search is on
-			if (query && !matchQuery && !hasResults) return null
-			// Hide uncategorised category if it is empty
-			if (!hasResults && category.id === -1) return null
+			if (query && !matchQuery && !items.length) return null
 
 			return <ListCategory
 				key={`category-${category.id}`}
 				category={category}
+				itemLength={items.length}
 				onChange={(category) => onChangeItem(category, 'categories')}
 				onDropItem={(item) => onChangeItem(item, 'items')}
 				onDelete={() => onDeleteItem(category.id, 'categories')}
@@ -82,10 +77,6 @@ export const ListApp = () => {
 				return a.name.localeCompare(b.name)
 			})
 
-		if (!items.length) return <p>
-			No items found {categoryId ? 'in this category' : ''}
-		</p>
-
 		return items.map((item) => {
 			return <ListItem
 				key={`item-${item.id}`}
@@ -111,12 +102,11 @@ export const ListApp = () => {
 			onChangeSettings={onChangeSettings}
 		/>
 
-		<div ref={drop}>
-			{showCategories && displayCategories()}
-			{!showCategories && <>
-				<h5 className="oc-list-category-name">Uncategorised</h5>
-				{displayItems()}
-			</>}
-		</div>
+		{showCategories && displayCategories()}
+		{!showCategories && <>
+			<h5 className="oc-list-category-name">Uncategorised</h5>
+			{displayItems()}
+		</>}
+
 	</>)
 };

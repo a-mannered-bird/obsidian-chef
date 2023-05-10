@@ -41,26 +41,29 @@ If your plugin does not need CSS, delete this file.
 		cursor: default;	
 	}
 
-
-.oc-category {
-	display: flex;
-	align-items: center;
-	margin: 20px 0 10px;
+.oc-category-wrapper-is-over {
+	border: 1px solid #ccc;
 }
-	.oc-list-category-fold-icon {
-		margin-right: 10px;
-		cursor: pointer;
-		transition: transform 0.2s;
-		font-weight: bold;
-	}
 
-	.oc-list-category-fold-icon-folded {
-		transform: rotate(90deg);
+	.oc-category {
+		display: flex;
+		align-items: center;
+		margin: 20px 0 10px;
 	}
+		.oc-list-category-fold-icon {
+			margin-right: 10px;
+			cursor: pointer;
+			transition: transform 0.2s;
+			font-weight: bold;
+		}
 
-	.oc-list-category-name {
-		margin: 0;
-	}
+		.oc-list-category-fold-icon-folded {
+			transform: rotate(90deg);
+		}
+
+		.oc-list-category-name {
+			margin: 0;
+		}
 
 .oc-list-item, .oc-checkbox {
 	display: flex;
@@ -69,13 +72,20 @@ If your plugin does not need CSS, delete this file.
 }
 
 .oc-list-item {
-/*	justify-content: space-between;*/
+	cursor: grab;
 }
 
 .oc-list-item-ticked {
 	text-decoration: line-through;
 	color: #999;
 }
+
+	.oc-list-item-drag-icon {
+		margin-right: 10px;
+		fill: white;
+	}
+
+	.oc-list-item-checkbox {}
 
 	.oc-list-item-quantity {
 		margin-left: 5px;

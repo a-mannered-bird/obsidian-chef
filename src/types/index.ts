@@ -28,3 +28,8 @@ export type PluginData = {
 	}
 	settings: Settings
 }
+
+export const DnDTypes = {
+	ITEM: 'item',
+	CATEGORY: 'category',
+}

@@ -1,7 +1,8 @@
 import * as React from "react";
 import {ListItem, ListCategory, ListFilters} from './components'
 import {getData, setItem, deleteItem, setSettings} from './utils'
-import {PluginData, Item, Settings, Category} from './types'
+import {PluginData, Item, Settings, Category, DnDTypes} from './types'
+import { useDrop } from 'react-dnd'
 
 export const ListApp = () => {
 	const [data, setData] = React.useState<PluginData|null>(null)
@@ -12,6 +13,7 @@ export const ListApp = () => {
 			setData(value)
 		})
 	}, [])
+	const [, drop] = useDrop(() => ({ accept: DnDTypes.ITEM }))
 
 	if (!data) return null
 
@@ -54,6 +56,7 @@ export const ListApp = () => {
 				key={`category-${category.id}`}
 				category={category}
 				onChange={(category) => onChangeItem(category, 'categories')}
+				onDropItem={(item) => onChangeItem(item, 'items')}
 				onDelete={() => onDeleteItem(category.id, 'categories')}
 			>
 				{!category.isFolded && items}
@@ -87,6 +90,7 @@ export const ListApp = () => {
 			return <ListItem
 				key={`item-${item.id}`}
 				item={item}
+				moveCard={(item) => { console.log('move card', item)}}
 				onChange={(item) => onChangeItem(item, 'items')}
 				onDelete={() => onDeleteItem(item.id, 'items')}
 			/>
@@ -107,10 +111,12 @@ export const ListApp = () => {
 			onChangeSettings={onChangeSettings}
 		/>
 
-		{showCategories && displayCategories()}
-		{!showCategories && <>
-			<h5 className="oc-list-category-name">Uncategorised</h5>
-			{displayItems()}
-		</>}
+		<div ref={drop}>
+			{showCategories && displayCategories()}
+			{!showCategories && <>
+				<h5 className="oc-list-category-name">Uncategorised</h5>
+				{displayItems()}
+			</>}
+		</div>
 	</>)
 };

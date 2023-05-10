@@ -19,13 +19,14 @@ If your plugin does not need CSS, delete this file.
 }
 
 .oc-list-search {
-	margin-top: 10px;
+	margin-top: 20px;
 	display: flex;
 	align-items: center;
 }
 
 	.oc-list-search-input {
 		margin-right: 5px;
+		width: 100%;
 	}
 
 	.oc-list-search-add {

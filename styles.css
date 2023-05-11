@@ -38,14 +38,23 @@ If your plugin does not need CSS, delete this file.
 		cursor: default;	
 	}
 
+.oc-category-wrapper {
+	padding-left: 10px;
+	margin-left: -10px;
+	padding-top: 10px;
+	margin-top: 10px;
+	border-box: box-sizing;
+	border: 1px solid transparent;
+}
+
 .oc-category-wrapper-is-over {
-	border: 1px solid #ccc;
+	border-color: #ccc;
 }
 
 	.oc-category {
 		display: flex;
 		align-items: center;
-		margin: 20px 0 10px;
+		margin: 0 0 10px;
 	}
 		.oc-list-category-fold-icon {
 			margin-right: 10px;

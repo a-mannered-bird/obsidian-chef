@@ -18,3 +18,17 @@ export const css: css = (params) => {
 		}, ``)
 		.trim()
 }
+
+export const countCharacterInString = (str: string, ch: string): number => {
+	let count = 0
+	for (let i = 0; i < str.length; i++) {
+		if (str[i] === ch) {
+			count++
+		}
+	}
+	return count
+} 
+
+export const calculateStringCh = (str: string): number => {
+	return str.length * 0.9 - (countCharacterInString(str, ' ') * 0.5)
+}

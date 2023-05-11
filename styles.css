@@ -70,6 +70,7 @@ If your plugin does not need CSS, delete this file.
 
 .oc-list-item {
 	cursor: grab;
+	flex-wrap: wrap;
 }
 
 .oc-list-item-ticked {
@@ -78,15 +79,20 @@ If your plugin does not need CSS, delete this file.
 }
 
 	.oc-list-item-drag-icon {
-		margin-right: 10px;
+		opacity: 0;
 		fill: white;
+		margin-left: -10px;
+		margin-right: 10px;
+	}
+
+	.oc-list-item:hover .oc-list-item-drag-icon {
+		opacity: 1;
 	}
 
 	.oc-list-item-checkbox {}
 
 	.oc-list-item-quantity {
 		margin-left: 5px;
-		margin-right: 10px;
 	}
 
 		.oc-list-item-decrement, .oc-list-item-increment {
@@ -115,10 +121,25 @@ If your plugin does not need CSS, delete this file.
 			border-bottom-left-radius: 0;
 		}
 
-		.oc-list-item-edit {
-			margin-left: 10px;
-			cursor: pointer;
+		.oc-list-item-name-wrapper {
+			display: flex;
+			margin: 5px 0 5px 5px;
 		}
+
+			.oc-list-item-name-editable {
+				margin-left: 5px;
+				min-width: 100px;
+				max-width: 200px;
+			}
+
+			.oc-list-item-name {
+				margin-left: 5px;
+			}
+
+			.oc-list-item-edit {
+				margin-left: 10px;
+				cursor: pointer;
+			}
 
 
 /* UTILITY CLASSES */

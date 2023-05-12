@@ -48,6 +48,15 @@ export const deleteItem = async (data: PluginData, itemId: number, type: 'items'
 	if (index !== -1) {
 		data.list[type].splice(index, 1)
 	}
+
+	// Unlink items linked to the deleted category
+	if (type === 'categories') {
+		data.list.items = data.list.items.map((i) => {
+			if (i.categoryId === itemId) return {...i, categoryId: -1}
+			return i
+		})
+	}
+
 	await writeData(data)
 	return data
 }

@@ -61,7 +61,14 @@ export const ListApp = () => {
 
 	const displayCategories = () => {
 		const categories: Category[] = [{id: -1, name: 'Uncategorised', order: 0}]
-			.concat(data?.list.categories || [])
+			.concat((data?.list.categories || [])
+				.sort((a, b) => {
+					if (data.settings.sortAlphabetically) return a.name.localeCompare(b.name)
+					if (a.order > b.order) return 1
+					if (a.order < b.order) return -1
+					return 0
+				})
+			)
 
 		return categories.map((category) => {
 			const matchQuery = category.name.toLowerCase().includes(query.toLowerCase())
@@ -97,12 +104,16 @@ export const ListApp = () => {
 				if (!query || bypassQuery) return true
 				return item.name.toLowerCase().includes(query.toLowerCase())
 			})
-			.sort((a: Item, b: Item) => {
+			.sort((a, b) => {
 				if (sortByTickedItem) {
 					if (a.ticked && !b.ticked) return 1
 					if (!a.ticked && b.ticked) return -1
 				}
-				return sortAlphabetically ? a.name.localeCompare(b.name) : 0
+
+				if (sortAlphabetically) return a.name.localeCompare(b.name)
+				if (a.order > b.order) return 1
+				if (a.order < b.order) return -1
+				return 0
 			})
 
 		return items.map((item) => {

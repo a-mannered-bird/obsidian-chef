@@ -69,6 +69,10 @@ If your plugin does not need CSS, delete this file.
 		cursor: default;	
 	}
 
+	.oc-list-search-error {
+		color: var(--text-error);
+	}
+
 
 /* ---- LIST CATEGORY ------ */ 
 

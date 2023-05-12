@@ -2,7 +2,8 @@ import * as React from 'react'
 import {Settings, Item, Category} from '../types'
 import {Checkbox, IconButton} from '../components'
 
-type ListFilters = {
+type ListFiltersProps = {
+	error?: string
 	query: string
 	settings: Settings
 	onAddItem: (item: Item | Category, type: 'items' | 'categories') => void
@@ -11,10 +12,11 @@ type ListFilters = {
 }
 
 const getNewItem = (name: string) => { 
-	return {name: name.trim(), ticked: false, quantity: 1, categoryId: -1, id: -1}
+	return {name: name.trim(), ticked: false, quantity: 1, categoryId: -1, id: -1, order: -1}
 }
 
-export const ListFilters: React.FC<ListFilters> = ({
+export const ListFilters: React.FC<ListFiltersProps> = ({
+	error = '',
 	query,
 	settings,
 	onAddItem,
@@ -76,9 +78,10 @@ export const ListFilters: React.FC<ListFilters> = ({
 					name="tag"
 					disabled={!query.trim()}
 					title="Add this category to your list"
-					onClick={() => onAddItem({name: query, id: -1}, 'categories')}
+					onClick={() => onAddItem({name: query, id: -1, order: -1}, 'categories')}
 				/>
 			</div>
+			<p className="oc-list-search-error">{error}</p>
 		</div>
 	</>
 }

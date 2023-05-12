@@ -96,5 +96,7 @@ export default JSON.stringify({
 // 	"showTicked": true,
 // 	"showCategories": true,
 // 	"showUnticked": true,
+//  "sortAlphabetically": false,
+//  "sortByTickedItem": true,
 // }
 // } as PluginData)

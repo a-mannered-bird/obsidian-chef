@@ -6,6 +6,8 @@ import {PluginData, Item, Settings, Category} from './types'
 export const ListApp = () => {
 	const [data, setData] = React.useState<PluginData|null>(null)
 	const [query, setQuery] = React.useState('')
+	const [queryError, setQueryError] = React.useState('')
+
 
 	React.useEffect(() => {
 		getData().then((value) => {
@@ -17,10 +19,32 @@ export const ListApp = () => {
 
 	const {showCategories, showTicked, showUnticked} = data.settings
 
-	const onChangeItem = (newItem: Item | Category, type: 'items' | 'categories') => {
+	const onChangeList = (newItem: Item | Category, type: 'items' | 'categories') => {
 		setItem({...data}, newItem, type).then((newData) => {
 			setData(newData)
 		})
+	}
+
+	const onAddItem = (item: Item | Category, type: 'items' | 'categories') => {
+		let newItem = item
+
+		if (type === 'items') {
+			// Increment quantity of existing item if there is one with the same name
+			const existingItem = data.list.items.find((i) => i.name.toLowerCase() === item.name.toLowerCase())
+			newItem = existingItem ? {...existingItem, quantity: existingItem.quantity + 1} : item
+
+		} else if (type === 'categories') {
+			// Cannot create a category with the same name
+			const existingItem = data.list.categories.find((i) => i.name.toLowerCase() === item.name.toLowerCase())
+			if (existingItem) {
+				setQueryError('This category name already exists. See the results below.')
+				return
+			}
+		}
+
+		onChangeList(newItem, type)
+		setQuery('')
+		setQueryError('')
 	}
 
 	const onDeleteItem = (itemId: number, type: 'items' | 'categories') => {
@@ -36,7 +60,7 @@ export const ListApp = () => {
 	}
 
 	const displayCategories = () => {
-		const categories: Category[] = [{id: -1, name: 'Uncategorised'}]
+		const categories: Category[] = [{id: -1, name: 'Uncategorised', order: 0}]
 			.concat(data?.list.categories || [])
 
 		return categories.map((category) => {
@@ -50,8 +74,8 @@ export const ListApp = () => {
 				key={`category-${category.id}`}
 				category={category}
 				itemLength={items.length}
-				onChange={(category) => onChangeItem(category, 'categories')}
-				onDropItem={(item) => onChangeItem(item, 'items')}
+				onChange={(category) => onChangeList(category, 'categories')}
+				onDropItem={(item) => onChangeList(item, 'items')}
 				onDelete={() => onDeleteItem(category.id, 'categories')}
 			>
 				{!category.isFolded && items}
@@ -82,7 +106,7 @@ export const ListApp = () => {
 				key={`item-${item.id}`}
 				item={item}
 				moveCard={(item) => { console.log('move card', item)}}
-				onChange={(item) => onChangeItem(item, 'items')}
+				onChange={(item) => onChangeList(item, 'items')}
 				onDelete={() => onDeleteItem(item.id, 'items')}
 			/>
 		})
@@ -92,13 +116,14 @@ export const ListApp = () => {
 		<h4>Obsidian Chef List</h4>
 
 		<ListFilters
+			error={queryError}
 			query={query}
 			settings={data.settings}
-			onAddItem={(item, type) => {
-				onChangeItem(item, type)
-				setQuery('')
+			onAddItem={onAddItem}
+			onChangeQuery={(query) => {
+				setQuery(query)
+				setQueryError('')
 			}}
-			onChangeQuery={setQuery}
 			onChangeSettings={onChangeSettings}
 		/>
 

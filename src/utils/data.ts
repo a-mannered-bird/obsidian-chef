@@ -34,7 +34,7 @@ export const setItem = async (data: PluginData, item: Item | Category, type: 'it
 	const index = data.list[type].findIndex(i => i.id === item.id)
 	if (index === -1) {
 		data.list[`${type}Count`]++
-		item.id = data.list[`${type}Count`]
+		item.id = item.order = data.list[`${type}Count`]
 		data.list[type].push(item as any)
 	} else {
 		data.list[type][index] = item

@@ -9,7 +9,7 @@ If your plugin does not need CSS, delete this file.
 /* ---- ICON ------ */ 
 
 .oc-icon path {
-	stroke: white;
+	stroke: var(--text-normal);
 }
 
 .oc-icon-button {
@@ -43,7 +43,7 @@ If your plugin does not need CSS, delete this file.
 }
 
 .oc-editable-input-edit:focus {
-	border: 1px solid white;
+	border: 1px solid var(--text-normal);
 }
 
 
@@ -82,7 +82,7 @@ If your plugin does not need CSS, delete this file.
 }
 
 .oc-category-wrapper-is-over {
-	border-color: #ccc;
+	border-color: var(--text-normal);
 }
 
 	.oc-category {
@@ -98,7 +98,7 @@ If your plugin does not need CSS, delete this file.
 		}
 
 		.oc-list-category-fold-icon:focus {
-			border: 1px solid white;
+			border: 1px solid var(--text-normal);
 		}
 
 		.oc-list-category-fold-icon-folded {
@@ -125,12 +125,12 @@ If your plugin does not need CSS, delete this file.
 
 .oc-list-item-ticked {
 	text-decoration: line-through;
-	color: #999;
+	opacity: 0.5 !important;
 }
 
 	.oc-list-item-drag-icon {
 		opacity: 0;
-		fill: white;
+		fill: var(--text-normal);
 		margin-left: -10px;
 		margin-right: 10px;
 	}

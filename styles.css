@@ -1,11 +1,12 @@
 /*
-
 This CSS file will be included with your plugin, and
 available in the app when your plugin is enabled.
 
 If your plugin does not need CSS, delete this file.
-
 */
+
+
+/* ---- ICON ------ */ 
 
 .oc-icon path {
 	stroke: white;
@@ -22,6 +23,31 @@ If your plugin does not need CSS, delete this file.
 	opacity: 0.5;
 	cursor: default;
 }
+
+
+/* ---- EDITABLE INPUT ------ */ 
+
+.oc-editable-input {
+	margin-left: 5px;
+	min-width: 100px;
+	max-width: 200px;
+}
+
+.oc-editable-input-edit, .oc-editable-input-validate {
+	margin-left: 10px;
+	cursor: pointer;
+}
+
+.oc-editable-input-edit {
+	flex-shrink: 0;
+}
+
+.oc-editable-input-edit:focus {
+	border: 1px solid white;
+}
+
+
+/* ---- LIST SEARCH ------ */ 
 
 .oc-list-search {
 	margin-top: 20px;
@@ -42,6 +68,9 @@ If your plugin does not need CSS, delete this file.
 		opacity: 0.5;
 		cursor: default;	
 	}
+
+
+/* ---- LIST CATEGORY ------ */ 
 
 .oc-category-wrapper {
 	padding-left: 10px;
@@ -68,6 +97,10 @@ If your plugin does not need CSS, delete this file.
 			font-weight: bold;
 		}
 
+		.oc-list-category-fold-icon:focus {
+			border: 1px solid white;
+		}
+
 		.oc-list-category-fold-icon-folded {
 			transform: rotate(90deg);
 		}
@@ -75,6 +108,9 @@ If your plugin does not need CSS, delete this file.
 		.oc-list-category-name {
 			margin: 0;
 		}
+
+
+/* ---- LIST ITEM ------ */ 
 
 .oc-list-item, .oc-checkbox {
 	display: flex;
@@ -137,30 +173,16 @@ If your plugin does not need CSS, delete this file.
 
 		.oc-list-item-name-wrapper {
 			display: flex;
+			align-items: center;
 			margin: 5px 0 5px 5px;
 		}
-
-			.oc-list-item-name-editable {
-				margin-left: 5px;
-				min-width: 100px;
-				max-width: 200px;
-			}
 
 			.oc-list-item-name {
 				margin-left: 5px;
 			}
 
-			.oc-list-item-edit {
-				margin-left: 10px;
-				cursor: pointer;
-			}
 
+/* ---- UTILITY CLASSES ------ */ 
 
-/* UTILITY CLASSES */
-.oc-mg-top-5 {
-	margin-top: 5px;
-}
-
-.oc-mg-top-10 {
-	margin-top: 10px;
-}
+.oc-mg-top-5 { margin-top: 5px; }
+.oc-mg-top-10 { margin-top: 10px; }

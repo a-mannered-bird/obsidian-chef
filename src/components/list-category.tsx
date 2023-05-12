@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {Icon, IconButton} from '.'
+import {EditableInput} from '.'
 import {Category, DnDTypes, Item} from '../types'
 import {capitalise, css} from '../utils'
 import { useDrop } from 'react-dnd'
@@ -21,7 +21,6 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 	onDropItem,
 	onDelete,
 }) => {
-	const [isEditing, setIsEditing] = React.useState(false)
 
 	const [{isOver}, drop] = useDrop(() => ({
 		accept: DnDTypes.ITEM,
@@ -50,6 +49,7 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 		ocCategoryWrapper: true,
 		ocCategoryWrapperIsOver: isOver,
 	})
+	const onFold = () => onChange({...category, isFolded: !category.isFolded})
 
 	return <div
 		className={wrapperClasses}
@@ -58,37 +58,21 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 		<div className="oc-category">
 			{isCategorised && <span
 				className={foldIconClasses}
-				onClick={() => onChange({...category, isFolded: !category.isFolded})}
+				onClick={onFold}
+				tabIndex={0}
+				onKeyDown={(e) => {if (e.code === 'Enter') onFold()}}
 			>
 				{'>'}
 			</span>}
 
-			{isEditing ? 
-				<input
-					type="text"
-					value={category.name}
-					onChange={(event) => onChange({...category, name: event.target.value})}
-				/> : <h5 className="oc-list-category-name">{capitalise(category.name)}</h5>
-			}
-
-			{isCategorised && !isEditing && <Icon
-				className="oc-list-item-edit"
-				name="edit"
-				size="18px"
-				onClick={() => setIsEditing(!isEditing)}
-			/>}
-
-			{isEditing && <IconButton 
-				className="oc-list-item-edit"
-				name="tick"
-				onClick={() => setIsEditing(false)}
-			/>}
-
-			{isEditing && <IconButton
-				className="oc-list-item-delete"
-				name="delete"
-				onClick={onDelete}
-			/>}
+			<EditableInput
+				isEditable={isCategorised}
+				onDelete={onDelete}
+				onValidate={(name) => onChange({...category, name})}
+				value={category.name}
+			>
+				<h5 className="oc-list-category-name">{capitalise(category.name)}</h5>
+			</EditableInput>
 		</div>
 
 		{!itemLength && <p>

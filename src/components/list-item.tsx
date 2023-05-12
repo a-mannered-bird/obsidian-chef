@@ -1,7 +1,7 @@
 import * as React from "react"
-import {Icon, IconButton} from '.'
+import {EditableInput, Icon} from '.'
 import {Item, DnDTypes} from '../types'
-import {calculateStringCh, css} from '../utils/utils'
+import {css} from '../utils/utils'
 import { useDrag, useDrop } from 'react-dnd'
 
 type ListItemProps = {
@@ -18,7 +18,6 @@ export const ListItem: React.FC<ListItemProps> = ({
 	onDelete,
 }) => {
 
-	const [isEditing, setIsEditing] = React.useState(false)
 	const [{ isDragging }, drag] = useDrag(
 		() => ({
 			type: DnDTypes.ITEM,
@@ -111,33 +110,13 @@ export const ListItem: React.FC<ListItemProps> = ({
 		</span>
 
 		<div className="oc-list-item-name-wrapper">
-			{isEditing ? 
-				<input
-					className="oc-list-item-name-editable"
-					type="text"
-					value={item.name}
-					style={{width: `${calculateStringCh(item.name) + 1.5}ch`}}
-					onChange={(event) => onChange({...item, name: event.target.value})}
-				/> : <span className="oc-list-item-name">{item.name}</span>
-			}
-
-			{!isEditing && <Icon 
-				className="oc-list-item-edit"
-				name="edit"
-				size="18px"
-				onClick={() => setIsEditing(true)}
-			/>}
-
-			{isEditing && <IconButton 
-				className="oc-list-item-edit"
-				name="tick"
-				onClick={() => setIsEditing(false)}
-			/>}
-
-			{isEditing && <IconButton
-				name="delete"
-				onClick={onDelete}
-			/>}
+			<EditableInput
+				onValidate={(name) => onChange({...item, name})}
+				onDelete={onDelete}
+				value={item.name}
+			>
+				<span className="oc-list-item-name">{item.name}</span>
+			</EditableInput>
 		</div>
 
 	</div>

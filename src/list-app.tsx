@@ -84,6 +84,8 @@ export const ListApp = () => {
 	}
 
 	const displayItems = (categoryId?: number, bypassQuery?: boolean) => {
+		const {sortAlphabetically, sortByTickedItem} = data.settings
+
 		const items = (data?.list.items || [])
 			.filter((item: Item) => {
 				const isTickedAllowed = item.ticked && showTicked
@@ -96,9 +98,11 @@ export const ListApp = () => {
 				return item.name.toLowerCase().includes(query.toLowerCase())
 			})
 			.sort((a: Item, b: Item) => {
-				if (a.ticked && !b.ticked) return 1
-				if (!a.ticked && b.ticked) return -1
-				return a.name.localeCompare(b.name)
+				if (sortByTickedItem) {
+					if (a.ticked && !b.ticked) return 1
+					if (!a.ticked && b.ticked) return -1
+				}
+				return sortAlphabetically ? a.name.localeCompare(b.name) : 0
 			})
 
 		return items.map((item) => {

@@ -52,6 +52,16 @@ export const ListFilters: React.FC<ListFiltersProps> = ({
 					value={settings.showCategories}
 					onChange={(value) => onChangeFilter('showCategories', value)}
 				/>
+				<Checkbox
+					label="Sort alphabetically items and categories"
+					value={settings.sortAlphabetically}
+					onChange={(value) => onChangeFilter('sortAlphabetically', value)}
+				/>
+				<Checkbox
+					label="Put ticked items at the bottom of each category list"
+					value={settings.sortByTickedItem}
+					onChange={(value) => onChangeFilter('sortByTickedItem', value)}
+				/>
 			</div>
 
 			<div className="oc-list-search">

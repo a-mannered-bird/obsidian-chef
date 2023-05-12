@@ -5,18 +5,22 @@ export type Item = {
 	categoryId: number
 	quantity: number
 	ticked: boolean
+	order: number
 }
 
 export type Category = {
 	id: number
 	isFolded?: boolean
 	name: string
+	order: number
 }
 
 export type Settings = {
 	showCategories: boolean
 	showTicked: boolean
 	showUnticked: boolean
+	sortAlphabetically: boolean
+	sortByTickedItem: boolean
 }
 
 export type PluginData = {

@@ -10,6 +10,10 @@ type ListFilters = {
 	onChangeQuery: (query: string) => void
 }
 
+const getNewItem = (name: string) => { 
+	return {name: name.trim(), ticked: false, quantity: 1, categoryId: -1, id: -1}
+}
+
 export const ListFilters: React.FC<ListFilters> = ({
 	query,
 	settings,
@@ -20,6 +24,12 @@ export const ListFilters: React.FC<ListFilters> = ({
 
 	const onChangeFilter = (key: keyof Settings, value: boolean) => {
 		onChangeSettings({...settings, [key]: value})
+	}
+
+	const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+		if (e.code === 'Enter' && query.trim()) {
+			onAddItem(getNewItem(query), 'items')
+		}
 	}
 
 	return <>
@@ -49,21 +59,22 @@ export const ListFilters: React.FC<ListFilters> = ({
 					type="text"
 					placeholder="Search/add an item"
 					value={query}
-					onChange={(event) => onChangeQuery(event.target.value)}
+					onChange={(e) => onChangeQuery(e.target.value)}
+					onKeyDown={onKeyDown}
 				/>
 
 				<IconButton
 					// className="oc-list-search-add"
 					name="add"
-					disabled={!query}
+					disabled={!query.trim()}
 					title="Add this item to your list"
-					onClick={() => onAddItem({name: query, ticked: false, quantity: 1, categoryId: -1, id: -1}, 'items')}
+					onClick={() => onAddItem(getNewItem(query), 'items')}
 				/>
 
 				<IconButton
 					// className="oc-list-search-add"
 					name="tag"
-					disabled={!query}
+					disabled={!query.trim()}
 					title="Add this category to your list"
 					onClick={() => onAddItem({name: query, id: -1}, 'categories')}
 				/>

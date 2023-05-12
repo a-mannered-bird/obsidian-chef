@@ -79,8 +79,8 @@ If your plugin does not need CSS, delete this file.
 .oc-category-wrapper {
 	padding-left: 10px;
 	margin-left: -10px;
-	padding-top: 10px;
-	margin-top: 10px;
+	padding-top: 5px;
+	margin-top: 5px;
 	border-box: box-sizing;
 	border: 1px solid transparent;
 }
@@ -92,21 +92,27 @@ If your plugin does not need CSS, delete this file.
 	.oc-category {
 		display: flex;
 		align-items: center;
-		margin: 0 0 10px;
+		margin: 0 0 5px;
 	}
+
+	.oc-category-wrapper-folded .oc-category {
+		margin: 0;
+	}
+
 		.oc-list-category-fold-icon {
 			margin-right: 10px;
 			cursor: pointer;
 			transition: transform 0.2s;
 			font-weight: bold;
+			transform: rotate(90deg);
 		}
 
 		.oc-list-category-fold-icon:focus {
 			border: 1px solid var(--text-normal);
 		}
 
-		.oc-list-category-fold-icon-folded {
-			transform: rotate(90deg);
+		.oc-category-wrapper-folded .oc-list-category-fold-icon {
+			transform: rotate(0deg);
 		}
 
 		.oc-list-category-name {

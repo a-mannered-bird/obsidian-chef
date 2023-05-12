@@ -43,11 +43,11 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 
 	const foldIconClasses = css({
 		ocListCategoryFoldIcon: true,
-		ocListCategoryFoldIconFolded: !category.isFolded,
 	})
 	const wrapperClasses = css({
 		ocCategoryWrapper: true,
 		ocCategoryWrapperIsOver: isOver,
+		ocCategoryWrapperFolded: !!category.isFolded,
 	})
 	const onFold = () => onChange({...category, isFolded: !category.isFolded})
 

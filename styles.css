@@ -18,6 +18,11 @@ If your plugin does not need CSS, delete this file.
 	cursor: pointer;
 }
 
+.oc-icon-button:disabled {
+	opacity: 0.5;
+	cursor: default;
+}
+
 .oc-list-search {
 	margin-top: 20px;
 	display: flex;

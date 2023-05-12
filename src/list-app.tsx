@@ -85,7 +85,7 @@ export const ListApp = () => {
 				onDropItem={(item) => onChangeList(item, 'items')}
 				onDelete={() => onDeleteItem(category.id, 'categories')}
 			>
-				{!category.isFolded && items}
+				{items}
 			</ListCategory>
 		})
 	}

@@ -75,10 +75,10 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 			</EditableInput>
 		</div>
 
-		{!itemLength && <p>
+		{!category.isFolded && !itemLength && <p>
 			No items found in this category
 		</p>}
 
-		{children}
+		{!category.isFolded && children}
 	</div>
 }

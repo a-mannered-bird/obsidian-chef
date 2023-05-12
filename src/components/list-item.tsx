@@ -18,7 +18,7 @@ export const ListItem: React.FC<ListItemProps> = ({
 	onDelete,
 }) => {
 
-	const [{ isDragging }, drag] = useDrag(
+	const [{isDragging}, drag] = useDrag(
 		() => ({
 			type: DnDTypes.ITEM,
 			item,
@@ -36,22 +36,27 @@ export const ListItem: React.FC<ListItemProps> = ({
 		[item, moveCard],
 	)
 
-	// const [, drop] = useDrop(
-	// 	() => ({
-	// 		accept: DnDTypes.ITEM,
-	// 		hover(draggedItem: Item) {
-	// 			console.log('hover', draggedItem.name, item.name);
-	// 			if (draggedItem.id !== item.id) {
-	// 				moveCard(draggedItem)
-	// 			}
-	// 		},
-	// 	}),
-	// 	[moveCard],
-	// )
+	const [{isOver}, drop] = useDrop(
+		() => ({
+			accept: DnDTypes.ITEM,
+			hover(draggedItem: Item) {
+				if (draggedItem.id !== item.id) {
+					console.log('hover', draggedItem.name, item.name);
+					// moveCard(draggedItem)
+				}
+			},
+			collect: (monitor) => ({
+				isOver: !!monitor.isOver(),
+			}),
+		}),
+		[moveCard],
+	)
 
 	const itemCss = css({
 		ocListItem: true,
 		ocListItemTicked: item.ticked,
+		ocListItemIsOver: isOver && !isDragging,
+		ocListItemIsDragging: isDragging,
 	})
 
 	const onTickItem = () => {
@@ -69,8 +74,7 @@ export const ListItem: React.FC<ListItemProps> = ({
 
 	return <div
 		className={itemCss}
-		ref={(node) => drag(node)}
-		style={{ opacity: isDragging ? 0 : 1 }}
+		ref={(node) => drag(drop(node))}
 	>
 		<Icon 
 			className="oc-list-item-drag-icon"

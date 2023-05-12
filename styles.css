@@ -6,6 +6,15 @@ If your plugin does not need CSS, delete this file.
 */
 
 
+/* ---- CHECKBOX ------ */ 
+
+ .oc-checkbox {
+	display: flex;
+	align-items: center;
+	margin-bottom: 5px;
+}
+
+
 /* ---- ICON ------ */ 
 
 .oc-icon path {
@@ -122,21 +131,26 @@ If your plugin does not need CSS, delete this file.
 
 /* ---- LIST ITEM ------ */ 
 
-.oc-list-item, .oc-checkbox {
-	display: flex;
-	align-items: center;
-	margin-bottom: 5px;
+.oc-list-item {
 }
 
 .oc-list-item {
+	display: flex;
+	align-items: center;
 	cursor: grab;
 	flex-wrap: wrap;
+	margin: 0 -10px;
+	padding: 2.5px 10px;
+	transition: all 0.2s;
 }
 
 .oc-list-item-ticked {
 	text-decoration: line-through;
 	opacity: 0.5 !important;
 }
+
+.oc-list-item-is-over { padding-bottom: 30px; }
+.oc-list-item-is-dragging { opacity: 0; height: 0; }
 
 	.oc-list-item-drag-icon {
 		opacity: 0;

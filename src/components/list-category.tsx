@@ -32,7 +32,6 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 		},
 		collect: (monitor) => ({
       isOver: !!monitor.isOver(),
-
     }),
 	}), [])
 

@@ -132,9 +132,6 @@ If your plugin does not need CSS, delete this file.
 /* ---- LIST ITEM ------ */ 
 
 .oc-list-item {
-}
-
-.oc-list-item {
 	display: flex;
 	align-items: center;
 	cursor: grab;
@@ -150,7 +147,7 @@ If your plugin does not need CSS, delete this file.
 }
 
 .oc-list-item-is-over { padding-bottom: 30px; }
-.oc-list-item-is-dragging { opacity: 0; height: 0; }
+.oc-list-item-is-dragging { opacity: 0; height: 0; padding: 0; }
 
 	.oc-list-item-drag-icon {
 		opacity: 0;

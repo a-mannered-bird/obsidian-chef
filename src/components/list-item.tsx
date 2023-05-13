@@ -6,14 +6,16 @@ import { useDrag, useDrop } from 'react-dnd'
 
 type ListItemProps = {
 	item: Item
+	canDrag: boolean
+	dropOnItem: (droppedItem: Item) => void
 	onChange: (newItem: Item) => void
 	onDelete: () => void
-	moveCard: (item: Item) => void
 }
 
 export const ListItem: React.FC<ListItemProps> = ({
 	item,
-	moveCard,
+	canDrag,
+	dropOnItem,
 	onChange,
 	onDelete,
 }) => {
@@ -33,30 +35,35 @@ export const ListItem: React.FC<ListItemProps> = ({
 			// 	}
 			// },
 		}),
-		[item, moveCard],
+		[item, canDrag],
 	)
 
 	const [{isOver}, drop] = useDrop(
 		() => ({
 			accept: DnDTypes.ITEM,
-			hover(draggedItem: Item) {
-				if (draggedItem.id !== item.id) {
-					console.log('hover', draggedItem.name, item.name);
-					// moveCard(draggedItem)
+			drop: (droppedItem: Item) => {
+				if (canDrag) {
+					dropOnItem(droppedItem)
 				}
 			},
+			// hover(draggedItem: Item) {
+			// 	if (draggedItem.id !== item.id) {
+			// 		console.log('hover', draggedItem.name, item.name);
+			// 		// moveCard(draggedItem)
+			// 	}
+			// },
 			collect: (monitor) => ({
 				isOver: !!monitor.isOver(),
 			}),
 		}),
-		[moveCard],
+		[item, canDrag],
 	)
 
 	const itemCss = css({
 		ocListItem: true,
 		ocListItemTicked: item.ticked,
-		ocListItemIsOver: isOver && !isDragging,
-		ocListItemIsDragging: isDragging,
+		ocListItemIsOver: canDrag && isOver && !isDragging,
+		ocListItemIsDragging: canDrag && isDragging,
 	})
 
 	const onTickItem = () => {

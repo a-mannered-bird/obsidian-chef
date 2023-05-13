@@ -1,6 +1,6 @@
 import * as React from "react";
 import {ListItem, ListCategory, ListFilters} from './components'
-import {getData, setItem, deleteItem, setSettings} from './utils'
+import {getData, setItems, deleteItem, setSettings} from './utils'
 import {PluginData, Item, Settings, Category} from './types'
 
 export const ListApp = () => {
@@ -20,7 +20,7 @@ export const ListApp = () => {
 	const {showCategories, showTicked, showUnticked} = data.settings
 
 	const onChangeList = (newItem: Item | Category, type: 'items' | 'categories') => {
-		setItem({...data}, newItem, type).then((newData) => {
+		setItems({...data}, [newItem], type).then((newData) => {
 			setData(newData)
 		})
 	}
@@ -55,6 +55,18 @@ export const ListApp = () => {
 
 	const onChangeSettings = (settings: Settings) => {
 		setSettings({...data}, settings).then((newData) => {
+			setData(newData)
+		})
+	}
+
+	const orderItems = (droppedItem: Item, targetItem: Item, itemsFromCategory: Item[]) => {
+		let newItems = [...itemsFromCategory].filter((i) => droppedItem.id !== i.id)
+		const targetItemIndex = newItems.findIndex((i) => targetItem.id === i.id)
+		newItems.splice(targetItemIndex + 1, 0, droppedItem)
+		newItems = newItems.map((item, i) => {
+			return {...item, order: i}
+		})
+		setItems({...data}, newItems, 'items').then((newData) => {
 			setData(newData)
 		})
 	}
@@ -120,9 +132,10 @@ export const ListApp = () => {
 			return <ListItem
 				key={`item-${item.id}`}
 				item={item}
-				moveCard={(item) => { console.log('move card', item)}}
 				onChange={(item) => onChangeList(item, 'items')}
 				onDelete={() => onDeleteItem(item.id, 'items')}
+				canDrag={!query}
+				dropOnItem={(droppedItem) => orderItems(droppedItem, item, items)}
 			/>
 		})
 	}

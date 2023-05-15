@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {EditableInput} from '.'
+import {EditableInput, Icon} from '.'
 import {Category, DnDTypes, Item} from '../types'
 import {capitalise, css} from '../utils'
 import { useDrop } from 'react-dnd'
@@ -58,14 +58,14 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 		ref={(node) => drop(node)}
 	>
 		<div className="oc-category">
-			{isCategorised && <span
+			{isCategorised && <Icon 
 				className={foldIconClasses}
 				onClick={onFold}
 				tabIndex={0}
 				onKeyDown={(e) => {if (e.code === 'Enter') onFold()}}
-			>
-				{'>'}
-			</span>}
+				name="arrow"
+				size="16px"
+			/>}
 
 			<EditableInput
 				isEditable={isCategorised}

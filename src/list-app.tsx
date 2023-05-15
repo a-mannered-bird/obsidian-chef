@@ -68,7 +68,7 @@ export const ListApp = () => {
 			})
 		let newItems = [...items].filter((i) => droppedItem.id !== i.id)
 		const targetItemIndex = newItems.findIndex((i) => targetItem.id === i.id)
-		newItems.splice(targetItemIndex + 1, 0, droppedItem)
+		newItems.splice(targetItemIndex + 1, 0, {...droppedItem, categoryId: targetItem.categoryId})
 		newItems = newItems.map((item, i) => {
 			return {...item, order: i}
 		})

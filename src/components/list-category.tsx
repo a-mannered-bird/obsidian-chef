@@ -3,6 +3,7 @@ import {EditableInput} from '.'
 import {Category, DnDTypes, Item} from '../types'
 import {capitalise, css} from '../utils'
 import { useDrop } from 'react-dnd'
+import { log } from 'console'
 
 type ListCategoryProps = {
 	category: Category
@@ -24,8 +25,9 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 
 	const [{isOver}, drop] = useDrop(() => ({
 		accept: DnDTypes.ITEM,
-		drop: (item: Item) => {
-			if (item.categoryId === category.id) {
+		drop: (item: Item, monitor) => {
+			const didDrop = monitor.didDrop()
+			if (item.categoryId === category.id || didDrop) {
 				return
 			}
 			onDropItem({...item, categoryId: category.id})

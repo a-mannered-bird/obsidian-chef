@@ -35,7 +35,7 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
       isOver: monitor.isOver(),
       isOverCurrent: monitor.isOver({ shallow: true }),
     }),
-	}), [])
+	}), [category.id, onDropItem])
 
 	// Hide uncategorised category if it is empty
 

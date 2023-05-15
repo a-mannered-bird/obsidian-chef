@@ -75,6 +75,7 @@ export const ListApp = () => {
 		newItems = newItems.map((item, i) => {
 			return {...item, order: i}
 		})
+
 		setItems({...data}, newItems, 'items').then((newData) => {
 			setData(newData)
 		})
@@ -143,7 +144,7 @@ export const ListApp = () => {
 				item={item}
 				onChange={(item) => onChangeList(item, 'items')}
 				onDelete={() => onDeleteItem(item.id, 'items')}
-				canDrag={!query}
+				canDrag={!query && !sortByTickedItem && !sortAlphabetically}
 				dropOnItem={(droppedItem) => orderItems(droppedItem, item)} 
 			/>
 		})

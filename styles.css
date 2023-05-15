@@ -140,7 +140,6 @@ If your plugin does not need CSS, delete this file.
 .oc-list-item {
 	display: flex;
 	align-items: center;
-	cursor: grab;
 	flex-wrap: wrap;
 	margin: 0 -10px;
 	padding: 2.5px 10px;
@@ -152,6 +151,7 @@ If your plugin does not need CSS, delete this file.
 	opacity: 0.5;
 }
 
+.oc-list-item-can-drag { cursor: grab; }
 .oc-list-item-is-over { padding-bottom: 30px; }
 .oc-list-item-is-dragging { opacity: 0; height: 0; padding: 0; }
 
@@ -162,7 +162,7 @@ If your plugin does not need CSS, delete this file.
 		margin-right: 10px;
 	}
 
-	.oc-list-item:hover .oc-list-item-drag-icon {
+	.oc-list-item.oc-list-item-can-drag:hover .oc-list-item-drag-icon {
 		opacity: 1;
 	}
 

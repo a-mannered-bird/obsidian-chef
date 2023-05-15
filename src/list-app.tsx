@@ -17,7 +17,7 @@ export const ListApp = () => {
 
 	if (!data) return null
 
-	const {showCategories, showTicked, showUnticked} = data.settings
+	const {showCategories, showTicked, showUnticked, sortAlphabetically, sortByTickedItem} = data.settings
 
 	const onChangeList = (newItem: Item | Category, type: 'items' | 'categories') => {
 		setItems({...data}, [newItem], type).then((newData) => {
@@ -59,8 +59,14 @@ export const ListApp = () => {
 		})
 	}
 
-	const orderItems = (droppedItem: Item, targetItem: Item, itemsFromCategory: Item[]) => {
-		let newItems = [...itemsFromCategory].filter((i) => droppedItem.id !== i.id)
+	const orderItems = (droppedItem: Item, targetItem: Item) => {
+		const items = (data?.list.items || [])
+			.sort((a, b) => {
+				if (a.order > b.order) return 1
+				if (a.order < b.order) return -1
+				return 0
+			})
+		let newItems = [...items].filter((i) => droppedItem.id !== i.id)
 		const targetItemIndex = newItems.findIndex((i) => targetItem.id === i.id)
 		newItems.splice(targetItemIndex + 1, 0, droppedItem)
 		newItems = newItems.map((item, i) => {
@@ -103,7 +109,6 @@ export const ListApp = () => {
 	}
 
 	const displayItems = (categoryId?: number, bypassQuery?: boolean) => {
-		const {sortAlphabetically, sortByTickedItem} = data.settings
 
 		const items = (data?.list.items || [])
 			.filter((item: Item) => {
@@ -135,7 +140,7 @@ export const ListApp = () => {
 				onChange={(item) => onChangeList(item, 'items')}
 				onDelete={() => onDeleteItem(item.id, 'items')}
 				canDrag={!query}
-				dropOnItem={(droppedItem) => orderItems(droppedItem, item, items)}
+				dropOnItem={(droppedItem) => orderItems(droppedItem, item)} 
 			/>
 		})
 	}

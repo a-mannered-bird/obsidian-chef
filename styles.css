@@ -138,12 +138,12 @@ If your plugin does not need CSS, delete this file.
 	flex-wrap: wrap;
 	margin: 0 -10px;
 	padding: 2.5px 10px;
-	transition: all 0.2s;
+	transition: padding-bottom 0.2s;
 }
 
 .oc-list-item-ticked {
 	text-decoration: line-through;
-	opacity: 0.5 !important;
+	opacity: 0.5;
 }
 
 .oc-list-item-is-over { padding-bottom: 30px; }

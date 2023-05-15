@@ -59,7 +59,7 @@ export const ListApp = () => {
 		})
 	}
 
-	const orderItems = (droppedItem: Item, targetItem: Item) => {
+	const orderItems = (droppedItem: Item, targetItem?: Item, targetCategoryId?: number) => {
 		const items = (data?.list.items || [])
 			.sort((a, b) => {
 				if (a.order > b.order) return 1
@@ -67,8 +67,11 @@ export const ListApp = () => {
 				return 0
 			})
 		let newItems = [...items].filter((i) => droppedItem.id !== i.id)
-		const targetItemIndex = newItems.findIndex((i) => targetItem.id === i.id)
-		newItems.splice(targetItemIndex + 1, 0, {...droppedItem, categoryId: targetItem.categoryId})
+		const targetItemIndex = targetItem ?
+			newItems.findIndex((i) => targetItem.id === i.id) :
+			newItems.findIndex((i) => targetCategoryId === i.categoryId)
+		const movedItem = {...droppedItem, categoryId: targetCategoryId || targetItem?.categoryId || -1}
+		newItems.splice(targetItemIndex + (!targetCategoryId ? 1 : 0), 0, movedItem)
 		newItems = newItems.map((item, i) => {
 			return {...item, order: i}
 		})
@@ -90,7 +93,7 @@ export const ListApp = () => {
 
 		return categories.map((category) => {
 			const matchQuery = category.name.toLowerCase().includes(query.toLowerCase())
-			const items = displayItems(category.id, matchQuery)
+			const items = getSortedItems(category.id, matchQuery)
 
 			// Hide empty categories when a search is on
 			if (query && !matchQuery && !items.length) return null
@@ -100,17 +103,16 @@ export const ListApp = () => {
 				category={category}
 				itemLength={items.length}
 				onChange={(category) => onChangeList(category, 'categories')}
-				onDropItem={(item) => onChangeList(item, 'items')}
+				onDropItem={(item) => orderItems(item, undefined, category.id)}
 				onDelete={() => onDeleteItem(category.id, 'categories')}
 			>
-				{items}
+				{displayItems(items)}
 			</ListCategory>
 		})
 	}
 
-	const displayItems = (categoryId?: number, bypassQuery?: boolean) => {
-
-		const items = (data?.list.items || [])
+	const getSortedItems = (categoryId?: number, bypassQuery?: boolean) => {
+		return (data?.list.items || [])
 			.filter((item: Item) => {
 				const isTickedAllowed = item.ticked && showTicked
 				const isUntickedAllowed = !item.ticked && showUnticked
@@ -132,7 +134,9 @@ export const ListApp = () => {
 				if (a.order < b.order) return -1
 				return 0
 			})
+	}
 
+	const displayItems = (items: Item[]) => {
 		return items.map((item) => {
 			return <ListItem
 				key={`item-${item.id}`}

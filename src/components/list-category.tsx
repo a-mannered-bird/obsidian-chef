@@ -3,7 +3,6 @@ import {EditableInput} from '.'
 import {Category, DnDTypes, Item} from '../types'
 import {capitalise, css} from '../utils'
 import { useDrop } from 'react-dnd'
-import { log } from 'console'
 
 type ListCategoryProps = {
 	category: Category
@@ -23,7 +22,7 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 	onDelete,
 }) => {
 
-	const [{isOver}, drop] = useDrop(() => ({
+	const [{isOver, isOverCurrent}, drop] = useDrop(() => ({
 		accept: DnDTypes.ITEM,
 		drop: (item: Item, monitor) => {
 			const didDrop = monitor.didDrop()
@@ -33,7 +32,8 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 			onDropItem({...item, categoryId: category.id})
 		},
 		collect: (monitor) => ({
-      isOver: !!monitor.isOver(),
+      isOver: monitor.isOver(),
+      isOverCurrent: monitor.isOver({ shallow: true }),
     }),
 	}), [])
 
@@ -48,6 +48,7 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 	const wrapperClasses = css({
 		ocCategoryWrapper: true,
 		ocCategoryWrapperIsOver: isOver,
+		ocCategoryWrapperIsOverCurrent: isOverCurrent,
 		ocCategoryWrapperFolded: !!category.isFolded,
 	})
 	const onFold = () => onChange({...category, isFolded: !category.isFolded})

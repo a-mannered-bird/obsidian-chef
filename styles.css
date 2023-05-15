@@ -102,10 +102,15 @@ If your plugin does not need CSS, delete this file.
 		display: flex;
 		align-items: center;
 		margin: 0 0 5px;
+		transition: padding-bottom 0.2s;
 	}
 
 	.oc-category-wrapper-folded .oc-category {
 		margin: 0;
+	}
+
+	.oc-category-wrapper-is-over-current .oc-category {
+		padding-bottom: 30px;
 	}
 
 		.oc-list-category-fold-icon {
@@ -127,6 +132,7 @@ If your plugin does not need CSS, delete this file.
 		.oc-list-category-name {
 			margin: 0;
 		}
+
 
 
 /* ---- LIST ITEM ------ */ 

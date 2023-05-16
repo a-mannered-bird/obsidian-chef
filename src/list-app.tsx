@@ -66,11 +66,14 @@ export const ListApp = () => {
 				if (a.order < b.order) return -1
 				return 0
 			})
-		let newItems = [...items].filter((i) => droppedItem.id !== i.id)
+		let newItems = [...items].filter((i) => droppedItem.id !== i.id) // Remove dropped item from list
 		const targetItemIndex = targetItem ?
-			newItems.findIndex((i) => targetItem.id === i.id) :
-			newItems.findIndex((i) => targetCategoryId === i.categoryId)
-		const movedItem = {...droppedItem, categoryId: targetCategoryId || targetItem?.categoryId || -1}
+			newItems.findIndex((i) => targetItem.id === i.id) : 
+			showCategories ? newItems.findIndex((i) => targetCategoryId === i.categoryId) : 0
+
+		const newCategoryId = showCategories ? (targetCategoryId || targetItem?.categoryId || -1) : droppedItem.categoryId
+		console.log(newCategoryId, showCategories);
+		const movedItem = {...droppedItem, categoryId: newCategoryId}
 		newItems.splice(targetItemIndex + (!targetCategoryId ? 1 : 0), 0, movedItem)
 		newItems = newItems.map((item, i) => {
 			return {...item, order: i}

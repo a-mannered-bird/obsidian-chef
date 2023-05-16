@@ -82,15 +82,19 @@ export const ListApp = () => {
 	}
 
 	const displayCategories = () => {
-		const categories: Category[] = [{id: -1, name: 'Uncategorised', order: 0}]
-			.concat((data?.list.categories || [])
-				.sort((a, b) => {
-					if (data.settings.sortAlphabetically) return a.name.localeCompare(b.name)
-					if (a.order > b.order) return 1
-					if (a.order < b.order) return -1
-					return 0
-				})
-			)
+		let categories: Category[] = [{id: -1, name: 'Uncategorised', order: 0}]
+
+		if (showCategories) {
+			categories = categories
+				.concat((data?.list.categories || [])
+					.sort((a, b) => {
+						if (data.settings.sortAlphabetically) return a.name.localeCompare(b.name)
+						if (a.order > b.order) return 1
+						if (a.order < b.order) return -1
+						return 0
+					})
+				)
+		}
 
 		return categories.map((category) => {
 			const matchQuery = category.name.toLowerCase().includes(query.toLowerCase())
@@ -165,11 +169,6 @@ export const ListApp = () => {
 			onChangeSettings={onChangeSettings}
 		/>
 
-		{showCategories && displayCategories()}
-		{!showCategories && <>
-			<h5 className="oc-list-category-name">Uncategorised</h5>
-			{displayItems()}
-		</>}
-
+		{displayCategories()}
 	</>)
 };

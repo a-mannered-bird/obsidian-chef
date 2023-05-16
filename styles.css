@@ -94,9 +94,9 @@ If your plugin does not need CSS, delete this file.
 	border: 1px solid transparent;
 }
 
-.oc-category-wrapper-is-over {
-	border-color: var(--text-normal);
-}
+	.oc-category-wrapper-is-over {
+		border-color: var(--text-normal);
+	}
 
 	.oc-category {
 		display: flex;
@@ -105,13 +105,13 @@ If your plugin does not need CSS, delete this file.
 		transition: padding-bottom 0.2s;
 	}
 
-	.oc-category-wrapper-folded .oc-category {
-		margin: 0;
-	}
+		.oc-category-wrapper-folded .oc-category {
+			margin: 0;
+		}
 
-	.oc-category-wrapper-is-over-current .oc-category {
-		padding-bottom: 30px;
-	}
+		.oc-category-wrapper-is-over-current .oc-category {
+			padding-bottom: 30px;
+		}
 
 		.oc-list-category-fold-icon {
 			margin-right: 10px;
@@ -121,17 +121,21 @@ If your plugin does not need CSS, delete this file.
 			transform: rotate(90deg);
 		}
 
-		.oc-list-category-fold-icon:focus {
-			border: 1px solid var(--text-normal);
-		}
+			.oc-list-category-fold-icon:focus {
+				border: 1px solid var(--text-normal);
+			}
 
-		.oc-category-wrapper-folded .oc-list-category-fold-icon {
-			transform: rotate(0deg);
-		}
+			.oc-category-wrapper-folded .oc-list-category-fold-icon {
+				transform: rotate(0deg);
+			}
 
 		.oc-list-category-name {
 			margin: 0;
 		}
+
+			.oc-category-wrapper-can-drag .oc-list-category-name {
+				cursor: grab;
+			}
 
 
 

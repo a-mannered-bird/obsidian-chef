@@ -36,7 +36,7 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 		[category, canDrag],
 	)
 
-	const [{isOver, isOverCurrent}, drop] = useDrop(() => ({
+	const [{itemIsOver, itemIsOverCurrent, categoryIsOver}, drop] = useDrop(() => ({
 		accept: [DnDTypes.ITEM, DnDTypes.CATEGORY],
 		drop: (item: Item | Category, monitor) => {
 			const didDrop = monitor.didDrop()
@@ -47,10 +47,15 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 				onDropItem({...item})
 			}
 		},
-		collect: (monitor) => ({
-      isOver: monitor.isOver(),
-      isOverCurrent: monitor.isOver({ shallow: true }),
-    }),
+		collect: (monitor) => {
+			const isItem = monitor.getItemType() === DnDTypes.ITEM
+			const isCategory = monitor.getItemType() === DnDTypes.CATEGORY
+			return {
+				itemIsOver: monitor.isOver() && isItem,
+				itemIsOverCurrent: monitor.isOver({ shallow: true }) && isItem,
+				categoryIsOver: monitor.isOver() && isCategory,
+			}
+		},
 	}), [category, onDropItem])
 
 	// Hide uncategorised category if it is empty
@@ -63,8 +68,9 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 	})
 	const wrapperClasses = css({
 		ocCategoryWrapper: true,
-		ocCategoryWrapperIsOver: isOver,
-		ocCategoryWrapperIsOverCurrent: isOverCurrent,
+		ocCategoryWrapperCanDrag: canDrag,
+		ocCategoryWrapperIsOver: itemIsOver && !isDragging,
+		ocCategoryWrapperIsOverCurrent: itemIsOverCurrent && !isDragging,
 		ocCategoryWrapperFolded: !!category.isFolded,
 	})
 	const onFold = () => onChange({...category, isFolded: !category.isFolded})

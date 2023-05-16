@@ -108,7 +108,7 @@ export const ListApp = () => {
 
 			return <ListCategory
 				key={`category-${category.id}`}
-				canDrag={true}
+				canDrag={category.id !== -1}
 				category={category}
 				itemLength={items.length}
 				onChange={(category) => onChangeList(category, 'categories')}

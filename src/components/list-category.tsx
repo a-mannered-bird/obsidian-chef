@@ -36,7 +36,7 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 		[category, canDrag],
 	)
 
-	const [{itemIsOver, itemIsOverCurrent, categoryIsOver}, drop] = useDrop(() => ({
+	const [{itemIsOver, itemIsOverCurrent, categoryIsOver, categoryIsDragging}, drop] = useDrop(() => ({
 		accept: [DnDTypes.ITEM, DnDTypes.CATEGORY],
 		drop: (item: Item | Category, monitor) => {
 			const didDrop = monitor.didDrop()
@@ -53,6 +53,7 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 			return {
 				itemIsOver: monitor.isOver() && isItem,
 				itemIsOverCurrent: monitor.isOver({ shallow: true }) && isItem,
+				categoryIsDragging: !!monitor.getItem() && isCategory,
 				categoryIsOver: monitor.isOver() && isCategory,
 			}
 		},
@@ -71,7 +72,7 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 		ocCategoryWrapperCanDrag: canDrag,
 		ocCategoryWrapperIsOver: itemIsOver && !isDragging,
 		ocCategoryWrapperIsOverCurrent: itemIsOverCurrent && !isDragging,
-		ocCategoryWrapperFolded: !!category.isFolded,
+		ocCategoryWrapperFolded: !!category.isFolded || categoryIsDragging,
 	})
 	const onFold = () => onChange({...category, isFolded: !category.isFolded})
 

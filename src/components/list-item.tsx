@@ -32,7 +32,7 @@ export const ListItem: React.FC<ListItemProps> = ({
 		[item, canDrag, dropOnItem],
 	)
 
-	const [{isOver}, drop] = useDrop(
+	const [{isOver, categoryIsDragging}, drop] = useDrop(
 		() => ({
 			accept: DnDTypes.ITEM,
 			drop: (droppedItem: Item) => {
@@ -41,6 +41,7 @@ export const ListItem: React.FC<ListItemProps> = ({
 				}
 			},
 			collect: (monitor) => ({
+				categoryIsDragging: !!monitor.getItem() && monitor.getItemType() === DnDTypes.CATEGORY,
 				isOver: !!monitor.isOver(),
 			}),
 		}),
@@ -53,6 +54,7 @@ export const ListItem: React.FC<ListItemProps> = ({
 		ocListItemCanDrag: canDrag,
 		ocListItemIsOver: canDrag && isOver && !isDragging,
 		ocListItemIsDragging: canDrag && isDragging,
+		ocListItemIsInvisible: categoryIsDragging,
 	})
 
 	const onTickItem = () => {

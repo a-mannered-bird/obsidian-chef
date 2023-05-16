@@ -43,7 +43,7 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 			if (didDrop) {
 				return
 			}
-			if ("categoryId" in item && item.categoryId !== category.id) {
+			if ("categoryId" in item) {
 				onDropItem({...item})
 			}
 		},

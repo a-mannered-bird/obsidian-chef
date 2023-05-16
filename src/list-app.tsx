@@ -72,7 +72,6 @@ export const ListApp = () => {
 			showCategories ? newItems.findIndex((i) => targetCategoryId === i.categoryId) : 0
 
 		const newCategoryId = showCategories ? (targetCategoryId || targetItem?.categoryId || -1) : droppedItem.categoryId
-		console.log(newCategoryId, showCategories);
 		const movedItem = {...droppedItem, categoryId: newCategoryId}
 		newItems.splice(targetItemIndex + (!targetCategoryId ? 1 : 0), 0, movedItem)
 		newItems = newItems.map((item, i) => {

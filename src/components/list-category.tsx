@@ -2,9 +2,10 @@ import * as React from 'react'
 import {EditableInput, Icon} from '.'
 import {Category, DnDTypes, Item} from '../types'
 import {capitalise, css} from '../utils'
-import { useDrop } from 'react-dnd'
+import { useDrag, useDrop } from 'react-dnd'
 
 type ListCategoryProps = {
+	canDrag: boolean
 	category: Category
 	children: React.ReactNode,
 	itemLength: number
@@ -14,6 +15,7 @@ type ListCategoryProps = {
 }
 
 export const ListCategory: React.FC<ListCategoryProps> = ({
+	canDrag,
 	category,
 	children,
 	itemLength,
@@ -22,20 +24,34 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 	onDelete,
 }) => {
 
+	const [{isDragging}, drag] = useDrag(
+		() => ({
+			canDrag,
+			type: DnDTypes.CATEGORY,
+			category,
+			collect: (monitor) => ({
+				isDragging: monitor.isDragging(),
+			}),
+		}),
+		[category, canDrag],
+	)
+
 	const [{isOver, isOverCurrent}, drop] = useDrop(() => ({
-		accept: DnDTypes.ITEM,
-		drop: (item: Item, monitor) => {
+		accept: [DnDTypes.ITEM, DnDTypes.CATEGORY],
+		drop: (item: Item | Category, monitor) => {
 			const didDrop = monitor.didDrop()
-			if (item.categoryId === category.id || didDrop) {
+			if (didDrop) {
 				return
 			}
-			onDropItem({...item, categoryId: category.id})
+			if ("categoryId" in item && item.categoryId !== category.id) {
+				onDropItem({...item, categoryId: category.id})
+			}
 		},
 		collect: (monitor) => ({
       isOver: monitor.isOver(),
       isOverCurrent: monitor.isOver({ shallow: true }),
     }),
-	}), [category.id, onDropItem])
+	}), [category, onDropItem])
 
 	// Hide uncategorised category if it is empty
 
@@ -55,7 +71,7 @@ export const ListCategory: React.FC<ListCategoryProps> = ({
 
 	return <div
 		className={wrapperClasses}
-		ref={(node) => drop(node)}
+		ref={(node) => drag(drop(node))}
 	>
 		<div className="oc-category">
 			{isCategorised && <Icon 

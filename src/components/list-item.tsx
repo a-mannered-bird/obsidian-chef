@@ -28,13 +28,6 @@ export const ListItem: React.FC<ListItemProps> = ({
 			collect: (monitor) => ({
 				isDragging: monitor.isDragging(),
 			}),
-			// end: (item, monitor) => {
-			// 	console.log('end', item, monitor);
-			// 	const didDrop = monitor.didDrop()
-			// 	if (!didDrop) {
-			// 		moveCard(item)
-			// 	}
-			// },
 		}),
 		[item, canDrag, dropOnItem],
 	)
@@ -47,12 +40,6 @@ export const ListItem: React.FC<ListItemProps> = ({
 					dropOnItem(droppedItem)
 				}
 			},
-			// hover(draggedItem: Item) {
-			// 	if (draggedItem.id !== item.id) {
-			// 		console.log('hover', draggedItem.name, item.name);
-			// 		// moveCard(draggedItem)
-			// 	}
-			// },
 			collect: (monitor) => ({
 				isOver: !!monitor.isOver(),
 			}),
